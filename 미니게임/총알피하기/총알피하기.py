@@ -14,7 +14,7 @@ done = False
 clock = pygame.time.Clock()
 
 def runGame():
-    bomb_image = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/미니게임/bullet-gcf.png")
+    bomb_image = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/미니게임/총알피하기/bullet-gcf.jpg")
     bomb_image = pygame.transform.scale(bomb_image, (50, 50))
     bombs = []
 
@@ -25,7 +25,7 @@ def runGame():
         dy = random.randint(3, 9)
         bombs.append({'rect': rect, 'dy': dy})
 
-    person_image = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/미니게임/human.png")
+    person_image = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/미니게임/총알피하기/human.jpg")
     person_image = pygame.transform.scale(person_image, (50, 50))
     person = pygame.Rect(person_image.get_rect())
     person.left = person.width

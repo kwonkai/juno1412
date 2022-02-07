@@ -1,3 +1,4 @@
+from tkinter import RIGHT
 import pygame
 import random
 #######################################3
@@ -18,10 +19,10 @@ clock = pygame.time.Clock()
 #################################################################
 # 1. 사용자 게임 초기화(배경화면, 게임 이미지, 좌표, 속도, 폰트 등 설정)
 # 1-1. 배경만들기
-background = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/미니게임/background2.jpg")
+background = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/미니게임/총알피하기/background2.jpg")
 
 # 1-2. 캐릭터만들기(사람, 총알)
-human = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/미니게임/human.jpg")
+human = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/미니게임/총알피하기/human.jpg")
 human_size = human.get_rect().size
 human_width = human_size[0]
 human_height = human_size[1]
@@ -31,7 +32,7 @@ human_speed = 7
 to_x = 0
 
 
-bullet = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/미니게임/bullet-gcf.jpg")
+bullet = pygame.image.load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/미니게임/총알피하기/bullet-gcf.jpg")
 bullet_size = bullet.get_rect().size
 bullet_width = bullet_size[0]
 bullet_height = bullet_size[1]
@@ -51,18 +52,19 @@ while running:
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                to_x = human_speed
+                to_x -= human_speed
             elif event.key == pygame.K_RIGHT:
-                to_x = human_speed
+                to_x += human_speed
 
         if event.type == pygame.KEYUP:
-            to_x = 0
-
+            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                to_x = 0
     # 3. 게임 캐릭터 위치 정의
+    
     human_x_pos += to_x
     
     if human_x_pos < 0:
-        human_x_pos =0
+        human_x_pos = 0
     elif human_x_pos > screen_width - human_width:
         human_x_pos = screen_width - human_width
 
