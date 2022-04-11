@@ -36,7 +36,3 @@ b = my -(mx*a)
 # 출력하기
 print("기울기 a =", a)
 print("y 절편 b", b)
-
-
-# 평균제곱근 오차(root mean square error)
-
