@@ -3,6 +3,9 @@
 
 import numpy as np
 import tensorflow as tf
+tf.__version__
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 # data list 만들기
 # i[0] = list 첫번째 값, i[1] = list 두번째 값
 data = [[2, 80], [4, 92], [6, 87], [8, 95]]
@@ -41,7 +44,7 @@ with tf.compat.v1.Session() as sess:
 
 
 
-# tensorflow 2.0 이상 버전 구문
+# # tensorflow 2.0 이상 버전 구문
 # import numpy as np
 # import pandas as pd
 # import matplotlib as plt

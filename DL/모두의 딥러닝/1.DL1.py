@@ -1,10 +1,11 @@
 # keras 함수, 라이브러리 불러오기
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+import tensorflow as tf
 from keras.models import Sequential
 from keras.layers import Dense
 import numpy
-import tensorflow as tf
+
 
 # 실행 시 같은 결과 출력 설정
 seed = 0
