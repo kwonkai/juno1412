@@ -25,7 +25,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 # 딥러닝 실행
 model.compile(loss='mean_squared_error', optimizer='adam', metrics=['accuracy'])
-model.fit(X, Y, epochs=30, batch_size=0)
+model.fit(X, Y, epochs=30, batch_size=10)
 
 # 결과출력
 print("\n Accuracy : %.4f" %(model.evaluate(X,Y)[1]))
