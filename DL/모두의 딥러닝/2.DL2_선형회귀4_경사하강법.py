@@ -5,8 +5,7 @@ from random import seed
 import numpy as np
 import tensorflow as tf
 tf.__version__
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+
 # data list 만들기
 # i[0] = list 첫번째 값, i[1] = list 두번째 값
 data = [[2, 80], [4, 92], [6, 87], [8, 95]]
@@ -15,9 +14,9 @@ y_data = [i[1] for i in data]
 
 learn_rate = 0.1
 
-# 기울기 a, y절편 b 임의값 정하기
+# 기울기 a, y절편 b 임의값 정하기exi
 # Variable() = 변수값 설정
-# random_unique() = 임의의 수를 생성해주는 함수 최소, 최대값만 적어줌
+# random.uniform() = 임의의 수를 생성해주는 함수 최소, 최대값만 적어줌
 a = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0))
 b = tf.Variable(tf.random.uniform([1], 0, 100, dtype=tf.float64, seed=0))
 
@@ -28,14 +27,12 @@ y = a * x_data + b
 rmse = tf.sqrt(tf.reduce_mean(tf.square(y - y_data)))
 
 # # 경사하강법
-gradient_decent = tf.compat.v1.train.GradientDescentOptimizer(learn_rate).minimize(rmse)
-
-# gradient_decent = tf.keras.optimizers.SGD(0.1).minimize(rmse) # tensorflow v2
+gradient_decent = tf.train.GradientDescentOptimizer(learn_rate).minimize(rmse)
 
 # tensorflow를 이용한 학습
 with tf.compat.v1.Session() as sess:
     # 변수 초기화
-    sess.run(tf.compat.v1.global_variables_initializer())
+    sess.run(tf.global_variables_initializer())
     # 2001번 실행(0번 째를 포함하므로)
     for step in range(2001):
         sess.run(gradient_decent)
