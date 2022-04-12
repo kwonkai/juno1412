@@ -136,7 +136,7 @@ with tf.Session() as sess:
 # 11. 실제 데이터 적용하기
 # (7,6) = 7,6은 공부한 시간과 과외 수업 횟수
 # feed_dict = placeholder에 new_x 데이터를 하나씩 읽고 실행함.
-    new_x = np.array([7,6]).reshape(1,2)
+    new_x = np.array([7,6.]).reshape(1,2)
     new_y = sess.run(y, feed_dict={X: new_x})
 
     print("공부한시간: %d, 과외 수업 횟수: %d" % (new_x[:,0], new_x[:,1]))
