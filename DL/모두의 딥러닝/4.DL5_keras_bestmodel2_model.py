@@ -54,8 +54,10 @@ checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=1
 
 history = model.fit(X, Y, validation_split=0.33, epochs=3500, batch_size=500)
 
+# Y의 오차값
 y_vloss = history.history['val_loss']
 
+# Y읠 정확도
 y_acc = history.history['acc']
 
 # 결과값 시각화
