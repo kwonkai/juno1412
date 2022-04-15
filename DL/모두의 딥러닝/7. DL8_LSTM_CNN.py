@@ -50,14 +50,20 @@ model.compile(loss ='binary_crossentropy', optimizer='adam', metrics=['accuracy'
 # 모델 실행
 history = model.fit(x_train, y_train, epochs=20, batch_size = 100, validation_data=(x_test, y_test))
 
-
 # 테스트 셋의 오차
-
+y_vloss = history.history['val_loss']
 
 # 학습셋의 오차
-
+y_loss = history.history['loss']
 
 # 그래프로 표현
-
+x_len = np.arange(len(y_loss))
+plt.plot(x_len, y_vloss, marker='.', c="red", label='Testset_loss')
+plt.plot(x_len, y_loss, marker='.', c="blue", label='Trainset_loss')
 
 # 그래프에 그리드를 주고 레이블을 표시
+plt.legend(loc='upper right')
+plt.grid()
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.show()
