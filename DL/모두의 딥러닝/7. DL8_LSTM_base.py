@@ -58,7 +58,7 @@ y_vloss = history.history['val_loss']
 y_loss = history.history['loss']
 
 # 그래프로 표현
-x_len = numpy.arange(len(y_loss))
+x_len = np.arange(len(y_loss))
 plt.plot(x_len, y_vloss, marker='.', c="red", label='Testset_loss')
 plt.plot(x_len, y_loss, marker='.', c="blue", label='Trainset_loss')
 
