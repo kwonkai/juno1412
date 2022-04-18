@@ -36,14 +36,12 @@ x_test = sequence.pad_sequences(x_test, maxlen = 100)
 model = Sequential()
 model.add(Embedding(5000,100))
 model.add(Dropout(0.5))
-model.add(Conv1D(64, 5, padding='same', activation='relu', strides=1))
+model.add(Conv1D(64, 5, padding='valid', activation='relu', strides=1))
 model.add(MaxPooling1D(pool_size=4))
 model.add(LSTM(55))
 model.add(Dense(1))
 model.add(Activation('sigmoid'))
 model.summary()
-
-model.add(LSTM
 
 
 model.compile(loss ='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
