@@ -1,7 +1,7 @@
 import sys
 import cgi
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-from database.dataabase import create_table, insert_record, fetch_records
+from databases.database import create_table, insert_record, fetch_records
 HOST_NAME = "localhost"
 PORT = 8080
 def read_html_template(path):
