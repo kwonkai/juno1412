@@ -1,7 +1,12 @@
+from email import message
 from http.server import BaseHTTPRequestHandler, HTTPServer # python3
 import socketserver
 import json
 import cgi
+from xmlrpc.client import Server
+
+# sorketserver : 네트워크 서버를 위한 프레임워크
+# cgi : 공용 게이트웨이 인터페이스
 
 class HandleRequests(BaseHTTPRequestHandler):
     def _set_headers(self):
@@ -16,21 +21,43 @@ class HandleRequests(BaseHTTPRequestHandler):
     # get으로 메세지 보내기
     def do_GET(self):
         self._set_headers()
-        self.wfile.write("received get request")
+        self.wfile.write(json.dumps({'hello': 'world', 'received' : 'ok'}))
+
     
     # post로 json 폴더에 메세지 보내기
     def do_POST(self):
+        ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
         
-        '''Reads post request body'''
+        # json 파일이 아니라면 거부
+        if ctype != 'application/json':
+            self.send_response(400)
+            self.end_headers()
+            return
+
+        # 메세지 리딩 -> python dictionary으로 전환
+        length = int(self.headers.getheader('content-length'))
+        message = json.loads(self.rfile.read(length))
+
+        # 데이터 객체에 속성 추가
+        message['received'] = 'ok'
+
+        # 메세지 회신
         self._set_headers()
-        content_len = int(self.headers.getheader('content-length', 0))
-        post_body = self.rfile.read(content_len)
-        self.wfile.write("received post request:<br>{}".format(post_body))
+        self.wfile.write(json.dumps(message))
 
-    def do_PUT(self):
-        self.do_POST()
+def run(server_class = HTTPServer, handler_class=Server, port = 8080):
+    server_address = ('', port)
+    # httpd = http deamon, 웹서버 배그라운드에서 실행되어 들어오는 서버 요청을 대기하는 역할
+    httpd = server_class(server_address, handler_class)
 
-host = ''
-port = 8082
-HTTPServer((host, port), HandleRequests).serve_forever()
+    print('server starting') 
+    httpd.serve_forever()
+
+if __name__ == "__main__":
+    from sys import argv
+
+    if len(argv) == 2:
+        run(port=int(argv[1]))
+    else:
+        run()
 
