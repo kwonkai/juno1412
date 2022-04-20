@@ -1,15 +1,3 @@
-# import http.server
-# import socketserver
-
-# PORT = 8000
-
-# handler = http.server.SimpleHTTPRequestHandler
-# httpd = socketserver.TCPServer(("", PORT), handler)
-# print("serving at port", PORT)
-# httpd.serve_forever()
-
-############################
-
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from signal import signal, SIGINT
@@ -33,22 +21,22 @@ class HttpHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404, 'Not found')
 
-    def do_POST(self):
-        path, _ = self.parse_url()
-        body = self.read_body()
+    # def do_POST(self):
+    #     path, _ = self.parse_url()
+    #     body = self.read_body()
 
-        if path == '/echo' and body and self.headers['Content-Type'] == "application/json":
-            json_body = self.parse_json(body)
+    #     if path == '/echo' and body and self.headers['Content-Type'] == "application/json":
+    #         json_body = self.parse_json(body)
 
-            if json_body:
-                self.write_response(202, "application/json",
-                                    dumps({"message": "Accepted", "request": json_body}, indent=2))
-            else:
-                self.send_error(400, 'Invalid json received')
-        elif path == '/echo' and body:
-            self.write_response(202, "text/plain", f"Accepted: {body}")
-        else:
-            self.send_error(404, 'Not found')
+    #         if json_body:
+    #             self.write_response(202, "application/json",
+    #                                 dumps({"message": "Accepted", "request": json_body}, indent=2))
+    #         else:
+    #             self.send_error(400, 'Invalid json received')
+    #     elif path == '/echo' and body:
+    #         self.write_response(202, "text/plain", f"Accepted: {body}")
+    #     else:
+    #         self.send_error(404, 'Not found')
 
     def parse_url(self):
         url_components = urlparse(self.path)
@@ -108,3 +96,17 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+###########################
+
+# import http.server
+# import socketserver
+
+# PORT = 8000
+
+# handler = http.server.SimpleHTTPRequestHandler
+# httpd = socketserver.TCPServer(("", PORT), handler)
+# print("serving at port", PORT)
+# httpd.serve_forever()
