@@ -1,14 +1,6 @@
 ### input, output
-in_str = input("입력하세요. \n")
-print(in_str.upper()+" World!")
-in_Str = get.chome()
 
-in_str = input("입력해주세요.\n")
-print(in_str.upper()+" World!")
-
-
-
-# 로그인 어플리케니션 입력 기능 추가
+# 로그인 어플리케이션 입력 기능 추가
 in_str = input("아이디를 입력해주세요. \n")
 real_egoing=11
 real_k8805 = "kc"
