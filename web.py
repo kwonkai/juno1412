@@ -56,7 +56,7 @@ def run(server_class = HTTPServer, handler_class=Server, port = 8080):
 
     print('server starting') 
     httpd.serve_forever()
-
+# 서버 run
 if __name__ == "__main__":
     from sys import argv
 
