@@ -9,7 +9,7 @@ print(in_str.upper()+" World!")
 
 
 # 로그인 어플리케니션 입력 기능 추가
-input = input("아이디를 입력해주세요. \n")
+in_str = input("아이디를 입력해주세요. \n")
 real_egoing=11
 real_k8805 = "kc"
 if real_egoing == input:
