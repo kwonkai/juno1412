@@ -1,21 +1,17 @@
-### 변수의 기본문법
-x=10
-y=5
-print(x+y)
+### 비교와 boolean
+# print (2+2) = print (4)
+# print (2==2) -> print( 참 )
+# boolean -> 참(True), 거짓(False)의 값으로만 이뤄져있는 데이터 형식
 
-title = "python & ruby"
-print("Title is" + title) 
+a=1
+b=1
 
-## 문자역에서의 변수의 사용
-# 변수를 왜 사용하는가?
+print(1==1)
+print(1==2)
 
-name = "해리포터"
-print("안녕하세요."+name+"님")
-print(name+"님을 위한 강의를 준비했어요")
-print(name+"참석 부탁드립니다.")
+print(1>2)
+print(1<2)
 
-### 수 계산에서 변수의 사용
-donation = 200
-student = 10
-sponsor = 20
-print((donation*student)/sponsor)
+print(True)
+print(False)
+
