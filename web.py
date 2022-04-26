@@ -1,3 +1,7 @@
+# SorketServer 모듈 = 네트워크 설정 시 필요한 클래스와 기능 제공
+# SorketServer모듈의 TCPServer는 TCP프로토콜을 사용해 서버를 설정한다. 생성자는 서버주소, 서버요청 클래스(튜플) 허용
+# Simplt
+
 from email import message
 from http.server import BaseHTTPRequestHandler, HTTPServer # python3
 import socketserver
@@ -26,7 +30,7 @@ class HandleRequests(BaseHTTPRequestHandler):
     
     # post로 json 폴더에 메세지 보내기
     def do_POST(self):
-        ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+        ctype = cgi.parse_header(self.headers.getheader('content-type'))
         
         # json 파일이 아니라면 거부
         if ctype != 'application/json':
