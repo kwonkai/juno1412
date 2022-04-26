@@ -22,6 +22,11 @@ input_pwd = input("비밀번호를 입력해주세요 \n")
 real_id= "egoing"
 real_pwd = "10"
 
+# read_id = input_id가 일치한다면
+# read_pwd = input_pwd가 일치할 경우 "Hello!"
+# pwd 불일치라면 wrong password!
+# id 불일치라면 wrong id!
+
 if real_id == input_id:
     if real_pwd == input_pwd:
         print("Hello!")
@@ -29,6 +34,9 @@ if real_id == input_id:
         print("wrong password!")
 else:
     print("wrong id!")
+
+
+
 
 # 2. or
 in_str = input("아이디를 입력해주세요. \n")
