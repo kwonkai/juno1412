@@ -36,3 +36,40 @@ mixing[1] = 'busan'
 print(mixing)
 
 
+### 컨테이너 list 심화
+names = ['kim', 'lee', 'jong', 'in']
+'kim' in names # True
+'jun' in names # False
+
+# len, min, max
+num = [ 1, 5, 10, 35, 54]
+len(num)
+min(num)
+max(num)
+
+# append, revers
+num.append(68)
+print(num)
+
+num.reverse()
+print(num)
+
+del(num[0])
+print(num)
+
+## 예제 풀어보기
+# 2. 여러 list
+lists = [[]] * 5
+lists
+
+lists[0].append(5)
+lists
+
+# 반복문
+list = [ [] for i in range(3)]
+list[0].append(3)
+list[1].append(5)
+list[2].append(7)
+
+list
+
