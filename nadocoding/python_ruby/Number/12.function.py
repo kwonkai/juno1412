@@ -85,19 +85,33 @@
 
 # 로그인 어플리케이션 기능추가
 # 함수화
-input_id = input("아이디를 입력해주세요. \n")
-def login (_id):
-    members = ['kim', 'gong', 'lee']
+# input_id = input("아이디를 입력해주세요. \n")
+# def login (_id):
+#     members = ['kim', 'gong', 'lee']
+#     for member in members:
+#         if member == _id:
+#             return True  # member == _id가 일치하면 True를 반환한다.
+#     return False  # for 문이 끝났을 때, 일치하지 않는다면 False 값을 반환한다.
+
+# if login(input_id):
+#     print('Hello, ' + input_id)
+# else:
+#     print('Who are you?')
+
+## 함수화 복습
+
+input_id = input("아이디를 입력해주세요 \n")
+def login(_id):
+    members = ['kim', 'gong', 'jun', 'ho']
     for member in members:
         if member == _id:
-            return True  # member == _id가 일치하면 True를 반환한다.
-    return False  # for 문이 끝났을 때, 일치하지 않는다면 False 값을 반환한다.
+            return True
+    return False
 
 if login(input_id):
-    print('Hello, ' + input_id)
+    print("Hello!" + " %s" % input_id)
 else:
-    print('Who are you?')
-
-
+    print("Good bye")
+        
 
 
