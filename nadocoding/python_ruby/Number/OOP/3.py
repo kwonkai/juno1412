@@ -24,6 +24,8 @@ print(c1.getValue())
 # c1.show()
 
 
+## set&get method
+
 class Cal(object):
 
 
@@ -37,8 +39,8 @@ class Cal(object):
     def subtract(self):
         return self.v1 - self.v2
     def setV1(self, v):
-        if isinstance(v, int): #isinstance?
-            self.v1 = v
+        if isinstance(v, int): # v = int 값인지 확인 True라면 실행, False 라면 무시
+            self.v1 = v 
     def getV1(self):
         return self.v1
 
