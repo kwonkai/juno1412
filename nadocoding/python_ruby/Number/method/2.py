@@ -19,11 +19,11 @@ class Cal(object):
         Cal._history.append("subtract : %d+%d=%d" % (self.v1, self.v2, result))
         return result
 
-    def setV1(self, v):
+    def setV1(self, v): # instance 변수의 값을 설정
         if isinstance(v, int): 
             self.v1 = v 
 
-    def getV1(self):
+    def getV1(self): # instance 변수의 값 가져오기
         return self.v1
 
 
@@ -33,10 +33,12 @@ class Cal(object):
             print(item)
 
 ## CalMultiply
+# 곱하기
 class CalMultiply(Cal): # Cal이 가진 모든 method를 상속받음
     def multiply(self):
         return self.v1*self.v2
 
+# 나누기
 class CalDivide(CalMultiply): # CalMultiply가 가진 모든 method를 상속받음
     def divide(self):
         return self.v1 / self.v2
