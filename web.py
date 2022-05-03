@@ -1,7 +1,17 @@
+
+import json
+# json 만들기
+fileName = "my-data.json"
+jsonString = '{ "name": "DelftStack", "email": "DelftStack@domain.com", "age": 20, "country": "Netherlands", "city": "Delft"}'
+jsonString = json.loads(jsonString)
+
+file = open(fileName, "w")
+json_ch = json.dump(jsonString, file)
+
+
 # SorketServer 모듈 = 네트워크 설정 시 필요한 클래스와 기능 제공
 # SorketServer모듈의 TCPServer는 TCP프로토콜을 사용해 서버를 설정한다. 생성자는 서버주소, 서버요청 클래스(튜플) 허용
 # Simplt
-
 from email import message
 from http.server import BaseHTTPRequestHandler, HTTPServer # python3
 import socketserver
@@ -17,15 +27,16 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
+        self.wfile.write("Hello".encode())
 
     def do_HEAD(self):
         self._set_headers()
 
     
     # get으로 메세지 보내기
-    def do_GET(self):
-        self._set_headers()
-        self.wfile.write(json.dumps({'hello': 'world', 'received' : 'ok'}))
+    # def do_GET(self):
+    #     self._set_headers()
+    #     self.wfile.write(json.dumps({jsonString}))
 
     
     # post로 json 폴더에 메세지 보내기
@@ -39,8 +50,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             return
 
         # 메세지 리딩 -> python dictionary으로 전환
-        length = int(self.headers.getheader('content-length'))
-        message = json.loads(self.rfile.read(length))
+        jsonString = self.headers.getheader('content-length')
+        message = json.loads(self.rfile.read(jsonString))
 
         # 데이터 객체에 속성 추가
         message['received'] = 'ok'
@@ -49,7 +60,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         self._set_headers()
         self.wfile.write(json.dumps(message))
 
-def run(server_class = HTTPServer, handler_class=Server, port = 8080):
+# http server run
+def run(server_class = HTTPServer, handler_class=Server, port = 8081):
     server_address = ('', port)
     # httpd = http deamon, 웹서버 배그라운드에서 실행되어 들어오는 서버 요청을 대기하는 역할
     httpd = server_class(server_address, handler_class)
