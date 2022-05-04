@@ -2,7 +2,7 @@
 import json
 # json 만들기
 fileName = "my-data.json"
-jsonString = '{ "name": "DelftStack", "email": "DelftStack@domain.com", "age": 20, "country": "Netherlands", "city": "Delft"}'
+jsonString = '{"type": "title", "id": "112,573,591,581,606,450,455,376,550,509"}'
 jsonString = json.loads(jsonString)
 
 file = open(fileName, "w")
@@ -14,7 +14,7 @@ json_ch = json.dump(jsonString, file)
 # Simplt
 from email import message
 from http.server import BaseHTTPRequestHandler, HTTPServer # python3
-import socketserver
+# import socketserver
 import json
 import cgi
 from xmlrpc.client import Server
@@ -34,9 +34,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     
     # get으로 메세지 보내기
-    # def do_GET(self):
-    #     self._set_headers()
-    #     self.wfile.write(json.dumps({jsonString}))
+    def do_GET(self):
+        self._set_headers()
+        self.wfile.write(json.dumps({jsonString}))
 
     
     # post로 json 폴더에 메세지 보내기
@@ -68,12 +68,13 @@ def run(server_class = HTTPServer, handler_class=Server, port = 8081):
 
     print('server starting') 
     httpd.serve_forever()
+run()
 # 서버 run
-if __name__ == "__main__":
-    from sys import argv
+# if __name__ == "__main__":
+#     from sys import argv
 
-    if len(argv) == 2:
-        run(port=int(argv[1]))
-    else:
-        run()
+#     if len(argv) == 2:
+#         run(port=int(argv[1]))
+#     else:
+#         run()
 
