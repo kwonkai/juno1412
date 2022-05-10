@@ -1,6 +1,5 @@
 ﻿# 과적합 피하기
 # 라이브러리 설정
-from tkinter import Y, Label
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from sklearn.preprocessing import LabelEncoder
