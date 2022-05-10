@@ -38,10 +38,12 @@ class Cal(object):
         return self.v1 + self.v2
     def subtract(self):
         return self.v1 - self.v2
-    def setV1(self, v):
+
+    def setV1(self, v): # instance 변수의 값을 설정
         if isinstance(v, int): # v = int 값인지 확인 True라면 실행, False 라면 무시
             self.v1 = v 
-    def getV1(self):
+
+    def getV1(self): # instance 변수의 값 가져오기
         return self.v1
 
 c1= Cal(10,10)

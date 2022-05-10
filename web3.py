@@ -13,7 +13,7 @@ class ncbot_RequestHandler(BaseHTTPRequestHandler):
 
 def run():
     print("Starting a server")
-    server_address = ("127.0.0.1", 8083)
+    server_address = ("127.0.0.1", 8888)
     httpd = HTTPServer(server_address, ncbot_RequestHandler)
 
     print("Running the server")

@@ -2,11 +2,15 @@
 import json
 # json 만들기
 fileName = "my-data.json"
-jsonString = '{"type": "title", "id": "112,573,591,581,606,450,455,376,550,509"}'
-jsonString = json.loads(jsonString)
+jsonString = '{"type": "title", "id": "581, 573, 606, 115, 591, 223, 549, 402, 203, 550" \
+               "type": "learningArea", "id": "573, 115, 606, 591, 581, 223, 86, 618, 592, 589"\
+               "type": "level", "id": "115, 606, 591, 581, 573, 223, 558, 533, 394, 592"}'
 
-file = open(fileName, "w")
-json_ch = json.dump(jsonString, file)
+
+with open(fileName, "w") as f:
+    jsonString = json.dump(jsonString, f, indent='\n', sort_keys=True)
+
+# jsonString = json.loads(jsonString)
 
 
 # SorketServer 모듈 = 네트워크 설정 시 필요한 클래스와 기능 제공
@@ -14,12 +18,12 @@ json_ch = json.dump(jsonString, file)
 # Simplt
 from email import message
 from http.server import BaseHTTPRequestHandler, HTTPServer # python3
-# import socketserver
+import socketserver
 import json
 import cgi
 from xmlrpc.client import Server
 
-# sorketserver : 네트워크 서버를 위한 프레임워크
+# sorketserver : 네트워크 서버를 위한 프레임워크pyth
 # cgi : 공용 게이트웨이 인터페이스
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -68,8 +72,9 @@ def run(server_class = HTTPServer, handler_class=Server, port = 8081):
 
     print('server starting') 
     httpd.serve_forever()
-run()
-# 서버 run
+
+
+# # 서버 run
 # if __name__ == "__main__":
 #     from sys import argv
 
@@ -77,4 +82,5 @@ run()
 #         run(port=int(argv[1]))
 #     else:
 #         run()
+
 
