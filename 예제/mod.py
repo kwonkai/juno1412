@@ -1,7 +1,8 @@
 # mod.py
 import json
 
-# 1번째 코드
+## 1번째 코드
+# list -> str
 def to_str(type,list):
     if type == 'name':
         string = ','.join(map(list))
@@ -11,7 +12,7 @@ def to_str(type,list):
         string = ','.join(map(list))
     return string
 
-
+# str -> dictionary
 def dict1(type,string):
     dict1 = {'type' : type, 'id' : string}
     return dict1
@@ -20,14 +21,17 @@ def dict2(type,string):
     dict2 = {'type' : type, 'id' : string}
     return dict2
 
-
+# dictionary -> json
 def json_ch1(dict1):
-    json_ch = json.dumps([dict1], indent ='\n')
-    return json_ch
+    json_ch1 = json.dumps([dict1], indent ='\n')
+    return json_ch1
 
 def json_ch2(dict2):
-    json_ch = json.dumps([dict2], indent ='\n')
-    return json_ch
+    json_ch2 = json.dumps([dict2], indent ='\n')
+    return json_ch2
+
+# json_merge
+json_plus = json.dumps([json_ch1, json_ch2], indent='\n')
 
 
 
@@ -45,9 +49,7 @@ def json_change(type, list):
     print(json_tmp)
     return json_tmp
 
-    
-
-# 3번째 최종 코드 list -> json
+# 4번째 최종 코드 list -> json
 def json_ch(type, list):
     string = ','.join(map(list))
     tmp_dic = {'type' : type, 'id' : string}

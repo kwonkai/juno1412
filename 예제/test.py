@@ -1,6 +1,7 @@
 # test.py
+from mod import to_str, dict1, dict2, json_ch, json_ch1, json_ch2, json_change
 from doctest import DocFileSuite
-import mod
+
 from pandas import DataFrame
 import pandas as pd
 
@@ -17,14 +18,15 @@ data['list']
 
 
 # 2번째 코드
-list = 
 
+list = data['type', 'list']
+json_change('name', list)
 
+list = data['type', 'list']
+json_change('age', list)
 
-
-
-
-
+list = data['type', 'list']
+json_change('address', list)
 
 
 
@@ -35,4 +37,10 @@ list =
 list = pd.read_csv('C:/Users/kwonk/juno1412-1/juno1412/예제/test_data.csv')
 for i in range(3):
     type = ['name', 'age', 'address']
+    list = data['list']
     json_ch(type[i], list)
+
+
+'''
+if __name__ == "__main__":
+'''
