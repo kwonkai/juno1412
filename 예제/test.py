@@ -42,9 +42,6 @@ json_change('address', list)
 
 
 
-
-
-
 # 최종코드
 list = pd.read_csv('C:/Users/kwonk/juno1412-1/juno1412/예제/test_data.csv')
 for i in range(3):
