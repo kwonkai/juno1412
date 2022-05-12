@@ -14,9 +14,7 @@ fr = fr.transpose()
 # fr.to_csv('fr.csv')
 # fr_data = pd.read_csv('C:/Users/kwonk/juno1412-1/juno1412/예제/fr.csv')
 fr
-for i in range(5): 
-    i = i+1 
-    fr[i]
+for i in range(5): i = i+1, fr[i]
 
 
 

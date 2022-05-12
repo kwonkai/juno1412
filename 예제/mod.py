@@ -1,5 +1,6 @@
 # mod.py
 import json
+import test
 
 ## 1번째 코드
 # list -> str
@@ -49,7 +50,7 @@ def json_change(type, list):
     print(json_tmp)
     return json_tmp
 
-# 4번째 최종 코드 list -> json
+# 3번째 최종 코드 list -> json
 def json_ch(type, list):
     string = ','.join(map(list))
     tmp_dic = {'type' : type, 'id' : string}
