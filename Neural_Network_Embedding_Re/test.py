@@ -309,14 +309,14 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
 
     # 가장 유사하지 않은 book
     if least:
-        # Take the first n from sorted distances
+        # 정렬에서 처음 n개 가져오기(유사하지 않는 book)
         closest = sorted_dists[:n]
          
         print(f'{index_name.capitalize()}s furthest from {name}.\n')
         
     # 가장 유사한 book
     else:
-        # Take the last n sorted distances
+        # 정렬에서 맨뒤 n개 가져오기(가장 유사한 book)
         closest = sorted_dists[-n:]
         
         # Need distances later on
@@ -326,21 +326,128 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
         
         print(f'{index_name.capitalize()}s closest to {name}.\n')
         
-        # Need distances later on
-        if return_dist:
-            return dists, closest
+    # Need distances later on
+    if return_dist:
+        return dists, closest
     
     
-    # Print formatting
+    # 인쇄 길이
     max_width = max([len(rindex[c]) for c in closest])
     
-    # Print the most similar and distances
+    # 가장 유사한 책, 유사도
     for c in reversed(closest):
         print(f'{index_name.capitalize()}: {rindex[c]:{max_width + 2}} Similarity: {dists[c]:.{2}}')
 
 # find similar book
-find_similar('War and Peace', book_weights)
+# parameter(name='War and Peace, weights='book_weights')
+find_similar('War and Peace', book_weights) #
 # find similar book 시각화
 find_similar('War and Peace', book_weights, n = 10, plot = True)
 
 
+# wikilinks extract embedding
+def extract_weights(name, model):
+    """Extract weights from a neural network model"""
+    
+    # layer, 가중치 받아오기
+    weight_layer = model.get_layer(name)
+    weights = weight_layer.get_weights()[0]
+    
+    # 정규화
+    weights = weights / np.linalg.norm(weights, axis = 1).reshape((-1, 1))
+    return weights
+
+link_weights = extract_weights('link_embedding', model)
+
+find_similar('biography', link_weights, index_name = 'page', n = 5, plot = True)
+
+
+## classification model
+model_class = book_embedding_model(50, classification = True)
+gen = generate_batch(pairs, n_positive, negative_ratio=2, classification = True)
+
+# 분류모델 학습
+h = model.fit_generator(gen, epochs = 15, steps_per_epoch = len(pairs) // n_positive, verbose=1)
+
+model_class.save('first_attempt_class.h5')
+
+book_weights_class = extract_weights('book_embedding', model_class)
+book_weights_class.shape
+
+find_similar('The Better Angels of Our Nature', book_weights_class, n = 5, plot=True)
+
+
+## visualization
+from sklearn.manifold import TSNE
+
+def reduce_dim(weights, components = 3, method = 'tsne'):
+    """Reduce dimensions of embeddings"""
+    method == 'tsne'
+    return TSNE(components, metric = 'cosine').fit_transform(weights)
+
+book_r = reduce_dim(book_weights_class, components = 2, method = 'tsne')
+book_r.shape
+
+InteractiveShell.ast_node_interactivity = 'last'
+
+plt.figure(figsize = (10, 8))
+plt.plot(book_r[:, 0], book_r[:, 1], 'r.')
+plt.xlabel('TSNE 1'); plt.ylabel('TSNE 2'); plt.title('Book Embeddings Visualized with TSNE');
+plt.show()
+
+
+## book Embeddings by Genre
+# book Genre 가져오기
+info = list(chain(*[set(book[1]) for book in books ]))
+# genre 개수 세기
+info_counts = count_items(info)
+# 상위 10개 뽑아오기
+list(info_counts.items())[:10]
+
+
+# ('genre', 'None') 값 찾아오기
+genres = [book[1].get('genre','None').lower() for book in books]
+
+#('genre', 'None') 개수 세기
+genre_counts = count_items(genres)
+
+# none값 제거하기
+del genre_counts['none']
+
+# genre 상위 10개 가져오기
+list(genre_counts.iteam())[:10]
+
+
+# Include 10 most popular genres
+genre_to_include = list(genre_counts.keys())[:10]
+
+idx_include = []
+genres = []
+
+for i, book in enumerate(books):
+    if 'genre' in book[1].keys():
+        if book[1]['genre'].lower() in genre_to_include:
+            idx_include.append(i)
+            genres.append(book[1]['genre'].capitalize())
+            
+len(idx_include)
+
+ints, gen = pd.factorize(genres)
+gen[:5]
+
+plt.figure(figsize = (10, 8))
+
+# Plot embedding
+plt.scatter(book_r[idx_include, 0], book_r[idx_include, 1], 
+            c = ints, cmap = plt.cm.tab10)
+
+# Add colorbar and appropriate labels
+cbar = plt.colorbar()
+cbar.set_ticks([])
+for j, lab in enumerate(gen):
+    cbar.ax.text(1, (2 * j + 1) / ((10) * 2), lab, ha='left', va='center')
+cbar.ax.set_title('Genre', loc = 'left')
+
+
+plt.xlabel('TSNE 1'); plt.ylabel('TSNE 2'); plt.title('TSNE Visualization of Book Embeddings');
+plt.show()
