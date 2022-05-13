@@ -227,11 +227,13 @@ model.save('first_attempt.h5')
 
 
 # extract embedding & analyze
-# Extract embeddings
+# book에 대한 embedding울 추출해 유사한 book&link를 찾는데 사용한다.
+# 각 book 50차원 vector로 표시
 book_layer = model.get_layer('book_embedding')
 book_weights = book_layer.get_weights()[0] # 1차원이라 [0]밖에 없음
 book_weights.shape
 
+# embedding이 내적 정규화하여(-1, 1) cosine similarity가 되도록 함
 book_weights = book_weights / np.linalg.norm(book_weights, axis = 1).reshape((-1, 1)) # norm = 거리측정, 벡터 사이의 길이 구하기
 book_weights[0][:10]
 np.sum(np.square(book_weights[0])) #book_weight[0] 제곱 -> sum
@@ -259,6 +261,8 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
     try:
         # 대상 책과 모든 책들 사이의 내적계산
         # 임베딩이 정규화된 경우 벡터 간의 내적은 가장 유사하지 않은 -1 에서 가장 유사한 +1 까지의 cosine similarity을 나타냄
+        # embedding : 고차원의 벡터공간에서 저차원의 벡터공간으로의 맵핑
+        # 임베딩 정규화 : 
         dists = np.dot(weights, weights[index[name]])
     except KeyError: # 책이 없는 경우 not Found
         print(f'{name} Not Found.')
@@ -268,6 +272,40 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
     # argsort(오름차순 정렬)
     sorted_dists = np.argsort(dists)
     
+    
+    # Plot results if specified
+    if plot:
+        
+        # Find furthest and closest items
+        furthest = sorted_dists[:(n // 2)]
+        closest = sorted_dists[-n-1: len(dists) - 1]
+        items = [rindex[c] for c in furthest]
+        items.extend(rindex[c] for c in closest)
+        
+        # Find furthest and closets distances
+        distances = [dists[c] for c in furthest]
+        distances.extend(dists[c] for c in closest)
+        
+        colors = ['r' for _ in range(n //2)]
+        colors.extend('g' for _ in range(n))
+        
+        data = pd.DataFrame({'distance': distances}, index = items)
+        
+        # Horizontal bar chart
+        data['distance'].plot.barh(color = colors, figsize = (10, 8),
+                                   edgecolor = 'k', linewidth = 2)
+        plt.xlabel('Cosine Similarity');
+        plt.axvline(x = 0, color = 'k');
+        
+        # Formatting for italicized title
+        name_str = f'{index_name.capitalize()}s Most and Least Similar to'
+        for word in name.split():
+            # Title uses latex for italize
+            name_str += ' $\it{' + word + '}$'
+        plt.title(name_str, x = 0.2, size = 28, y = 1.05)
+        
+        return None
+
 
     # 가장 유사하지 않은 book
     if least:
@@ -288,9 +326,9 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
         
         print(f'{index_name.capitalize()}s closest to {name}.\n')
         
-    # Need distances later on
-    if return_dist:
-        return dists, closest
+        # Need distances later on
+        if return_dist:
+            return dists, closest
     
     
     # Print formatting
@@ -300,6 +338,9 @@ def find_similar(name, weights, index_name = 'book', n = 10, least = False, retu
     for c in reversed(closest):
         print(f'{index_name.capitalize()}: {rindex[c]:{max_width + 2}} Similarity: {dists[c]:.{2}}')
 
+# find similar book
 find_similar('War and Peace', book_weights)
+# find similar book 시각화
+find_similar('War and Peace', book_weights, n = 10, plot = True)
 
 
