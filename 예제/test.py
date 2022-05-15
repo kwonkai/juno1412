@@ -6,7 +6,14 @@ from pandas import DataFrame
 import pandas as pd
 
 info = [ [ 'name', 1, 2, 3, 4  ], [ 'age', 10, 20, 30, 40 ], [ 'address', 100, 200, 300, 400 ] ]
+title = [1, 2, 3, 4, 5, 6]
+name = [ 4, 6,2, 6,7, 8]
+age = [ 25, 36, 64, 32, 23]
+df = pd.DataFrame(title, name, age, index=[title,name,age])
+
 df = pd.DataFrame( info, columns = ['type', 'list'], index=False )
+
+
 
 f = [213, 512, 564, 214, 15, 48]
 fr = pd.DataFrame(f, columns=['name'])
