@@ -28,71 +28,114 @@ mixing[2] = mixing[2]*5
 # 값 슬라이싱
 mixing[0:3]
 
-### 함수
-def add(a, b): 
-    return a + b
-    
-a=2
-b=1
-add(1,2)
+
+
+### 조건문 제어문
+# if
+money = True
+if money:
+    print("택시를 타세요")
+
+
+#if else
+money = 1000
+if money >= 3000:
+    print("버스를 타세요")
+else:
+    print("따릉이를 타세요")
 
 
 # if ~ elif ~ else
-# pockets = [1000, 3000, 5000]
-# for porket in pockets:
-#    if porket == 5000:
-#       print("택시를 타고 가라")
-#    elif porket == 3000:
-#       print("버스를 타라")
-#    elif porket == 1000:
-#       print("따릉이를 타라")
-#    else:
-#       print("걸어가자")
-
-# # in, not in
-# pockets = ['cellphone', 'money']
-# for pocket in pockets:
-#    if 'money' not in pockets:
-#       print("버스를 타고 가라")
-#    elif 'card' in pockets:
-#       print("따릉이를 타라")
-
-# i = 1
-
-# while i < 100:
-#    i += 1
-#    if i*3 > 50:
-#       result = i*3
-# print(result)
-
-
-# books = [ 'a', 'b', 'c', 'd']
-# books[0]
-# book = [book for book in books if 1 in books[0]]
-
+pocket = [1000, 3000, 5000]
+if 5000 in pocket:
+    print("택시를 타고 가라")
+elif 3000 in pocket:
+    print("버스를 타라")
+elif 1000 in pocket:
+    print("따릉이를 타라")
+else:
+    print("걸어가자")
 
 # and / or / not
-# money = 2000
-# card = True
-# if money >= 3000 and card:
-#     print("택시를 타고 가라")
-# elif money == 2000 or card:
-#     print("버스를 타고 가라")
-# else:
-#     print("걸어가라")
+money = 2000
+card = True
+if money >= 3000 and card:
+    print("택시를 타고 가라")
+elif money == 2000 or card:
+    print("버스를 타고 가라")
+else:
+    print("걸어가라")
 
-# # 중복 for 문
-# nums = [1, 2, 3]
-# plus = [2, 3, 5]
-# for num in nums:
-# 	for j in plus:
-#         	num = num + j
-# print(num)
 
-# for i in range(5) : 
-#     for j in range(5-i) :
-#         print('*', end='')
-#     print()
+# in, not in
+pocket = ['cellphone', 'money']
+if 'money' in pocket:
+    print("버스를 타고 가라")
+else:
+    print("따릉이를 타라")
+
+### 반복문
+# 3번만 반복하는 반복문 
+i = 0 
+while i < 3:  # i = 0,1,2 #3이면 False로 멈춤 
+    i = i + 1
+    print('Hello world') 
+    
+
+# while, if조건문 break
+i = 0
+while i < 10:
+    if i == 4:
+        break
+    print(i)
+    i = i+1
+
+
+# while, if 조건문 continue
+num = 0
+while num < 5:
+    num += 1
+    if num == 3:
+        continue
+    print(num)
+
+# for 반복문
+members = ['lee', 'kim', 'gong', 'gu']
+for member in members:
+    print(member)
+    
+# for문 range 활용하기
+for item in range(5,14):
+    print(item)
+    
+# for, if 문
+items = ['a', 'b', 'c', 'd']
+for item in items:
+    if item == 'd':
+        items.append('e')
+    print(items)
+
+# 중복 for 문
+for i in range(5):
+  for j in range(5):
+  	print(i+j, end=' ')
+
+### 함수
+def add(a,b):
+    return a+b
+
+a=2
+b=1
+add(10,5)
+
+### 인수, 파라미터
+def kaka(num1, num2): # parameter = (num1, num2)
+    result = num1 - num2
+    return result
+    
+call = kaka(2,1) # argument = (2,1)
+call
+
 
 class Class1(object):
     def method1(self): return 'm1'
@@ -145,3 +188,48 @@ class C2(C1):
     pass
 o = C2()
 print(o.m())
+
+def kaka(num1, num2): # parameter = (num1, num2)
+    result = num1 - num2
+    return result
+    
+call = kaka(2,1) # argument = (2,1)
+call
+
+from abc import *
+ 
+class StudentBase(metaclass=ABCMeta): # 추상메서드
+    @abstractmethod
+    def study(self):
+        pass
+ 
+    @abstractmethod
+    def go_to_school(self):
+        pass
+ 
+class Student(StudentBase):
+    def study(self):
+        print('공부하기')
+ 
+    def go_to_school(self):
+        print('학교가기')
+ 
+james = Student()
+james.study()
+james.go_to_school()
+
+items = ['a', 'b', 'c', 'd']
+for item in items:
+	if item == 'd':
+         items.append('e')
+         print(items)
+for i in range(5):
+    for j in range(5):
+        print(i+j, end="")
+    print()
+   
+
+for i in range(4):
+    for j in range(4):
+        print(i + j, end=" ")
+    print()
