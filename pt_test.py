@@ -84,11 +84,11 @@ while i < 3:  # i = 0,1,2 #3이면 False로 멈춤
 
 # while, if조건문 break
 i = 0
-while i < 10:
-    if i == 4:
-        break
+while True:    # 무한 루프
     print(i)
-    i = i+1
+    i = i + 1          # i를 1씩 증가시킴
+    if i == 10:    # i가 100일 때
+        break  
 
 
 # while, if 조건문 continue
@@ -116,9 +116,10 @@ for item in items:
     print(items)
 
 # 중복 for 문
-for i in range(5):
-  for j in range(5):
-  	print(i+j, end=' ')
+for i in range(2,9):
+    for j in range(1,9):
+        print(i*j, end=" ")
+
 
 ### 함수
 def add(a,b):
@@ -155,6 +156,8 @@ print(c3, c3.method2())
 # print(c2, c2.method1())
 # print(c2, c2.method2())
 
+
+
 ## 캡슐화
 class Cal(object):
     def __init__(self, v1, v2):
@@ -181,7 +184,7 @@ c1.v2 = 30
 print(c1.add())
 print(c1.subtract())
 
-
+### Override
 class C1:
     def m(self):
         return 'parent'
@@ -192,12 +195,17 @@ class C2(C1):
 o = C2()
 print(o.m())
 
+### parameter vs argument
+
 def kaka(num1, num2): # parameter = (num1, num2)
     result = num1 - num2
     return result
     
 call = kaka(2,1) # argument = (2,1)
 call
+
+
+### 추상메서드
 
 from abc import *
  
@@ -221,18 +229,3 @@ james = Student()
 james.study()
 james.go_to_school()
 
-items = ['a', 'b', 'c', 'd']
-for item in items:
-	if item == 'd':
-         items.append('e')
-         print(items)
-for i in range(5):
-    for j in range(5):
-        print(i+j, end="")
-    print()
-   
-
-for i in range(4):
-    for j in range(4):
-        print(i + j, end=" ")
-    print()
