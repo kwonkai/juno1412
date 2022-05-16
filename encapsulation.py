@@ -30,3 +30,6 @@ class Unit:
 unit = Unit("홍길동")
 unit.
 print("유닛 이름:{0} 체력:{1}".format(unit.GetName(), unit.GetHP()))
+
+
+
