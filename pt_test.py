@@ -160,20 +160,23 @@ class Cal(object):
     def __init__(self, v1, v2):
         self.__v1 = v1 # __ 인스턴스 외부에서 접근하지 못함
         self.v2 = v2
-        
-    def add(self):
-        return self.v1+self.v2
-    def subtract(self):
-        return self.v1-self.v2
-        
+    
     def setV1(self, v):
         if isinstance(v, int): # int 값만 v 변수로 받을 것
-            self.v1 = v
+            self.__v1 = v
+
     def getV1(self):
-        return self.v1
+        return self.__v1
+        
+    def add(self):
+        return self.__v1+self.v2
+    def subtract(self):
+        return self.__v1-self.v2
+        
 c1 = Cal(10,10)
 print(c1.add())
 print(c1.subtract())
+
 c1.v2 = 30
 print(c1.add())
 print(c1.subtract())
