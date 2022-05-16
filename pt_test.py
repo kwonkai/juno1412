@@ -124,10 +124,28 @@ for i in range(2,9):
 ### 함수
 def add(a,b):
     return a+b
-
 a=2
 b=1
 add(10,5)
+
+
+## 로그인 기능 함수
+#input
+input_id = 'egoing'
+input_id = 'juno'
+
+# login 함수
+def login(_id):
+    members = ['egoing', 'k8805', 'leezche']
+    for member in members:
+        if member == _id:
+            return True
+    return False
+    
+if login(input_id): # id가 일치한다면 hello!+id , 일치하지 않는다면 who are you?
+    print('Hello, '+input_id)
+else:
+    print('Who are you?')
 
 ### 인수, 파라미터
 def kaka(num1, num2): # parameter = (num1, num2)
@@ -137,14 +155,49 @@ def kaka(num1, num2): # parameter = (num1, num2)
 call = kaka(2,1) # argument = (2,1)
 call
 
+### 캡슐화(encapsulation
+# 캡슐화
+# class 생성
+# 은닉 = '__'
+class Men:
+    def __init__(self, name, number):
+        self.__name = name
+        self.__number = number
 
-class Class1(object):
-    def method1(self): return 'm1'
-c1 = Class1()
-print(c1, c1.method1())
+    def get_name(self):
+        return self.__name
+    
+    def set_name(self, name):
+        self.__name = name
+    
+    def get_number(self):
+        return self.__number
+    
+    def set_number(self, number):
+        self.__number = number
+
+a = Men("민지", 13)
+# # name, number, __name, __number 불러와지지 않음
+# print(a.name) 
+# print(a.number) 
+# print(a.__name) 
+# print(a.__number) 
+
+# get_method로 불러오기
+print(a.get_name())
+print(a.get_number())
+
+
+
+### override
+
+class Class1:
+    def method1(self): 
+        return 'parent'
  
 class Class3(Class1):
-    def method2(self): return 'm2'
+    def method2(self): 
+        return super().method1() + 'children'
 c3 = Class3()
 print(c3, c3.method1())
 print(c3, c3.method2())
@@ -208,6 +261,7 @@ call
 ### 추상메서드
 
 from abc import *
+from re import I
  
 class StudentBase(metaclass=ABCMeta): # 추상메서드
     @abstractmethod
@@ -228,4 +282,3 @@ class Student(StudentBase):
 james = Student()
 james.study()
 james.go_to_school()
-
