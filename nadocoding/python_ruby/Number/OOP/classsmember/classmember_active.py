@@ -14,7 +14,7 @@ class Cal(object):
 
     def substract(self):
         result = self.v1 - self.v2
-        Cal._history.append("add : %d + %d = %d" % (self.v1, self.v2, result))
+        Cal._history.append("substract : %d - %d = %d" % (self.v1, self.v2, result))
         return result
     def setV1(self, v):
         if isinstance(v, int):
@@ -39,11 +39,12 @@ class CalDivide(CalMultiply):
         result = self.v1/self.v2
         return result
 
-c1 = CalMultiply(10,10)
+c1 = CalMultiply(20,10)
 print(c1.add())
-print(c1.multiply())
-c2 = CalDivide(20,10)
-print(c2, c2.add())
-print(c2, c2.multiply())
-print(c2, c2.divide())
 Cal.history()
+print(c1.substract())
+Cal.history()
+# c2 = CalDivide(20,10)
+# # print(c2, c2.add())
+# # print(c2, c2.multiply())
+# # print(c2, c2.divide())
