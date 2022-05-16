@@ -1,19 +1,27 @@
 
 ### 객체와 변수
-# 인캡슐레이션(캡슐화)
+# 클래스 생성자
 
-class C:
-    def __init__(self, v):
-        self.value = v
-    def show(self):
-        print(self.value)
+class Cal(object):
+    def __init__(self, v1, v2): # 생성자
+        print(v1, v2)
+ 
+c1 = Cal(10,10)
 
+### 인스턴스 변수 & 메소드
+class Cal(object):
+    def __init__(self, v1, v2): # 생성자 # self : 인스턴스 변수
+        self.v1 = v1
+        self.v2 = v2
 
-c1 = C(10)
-print(c1.value)
+    def add(self): # 인스턴스 메소드 # self : 인스턴스 변수
+        return self.v1 + self.v2  # self.v1 : 인스턴스 변수 v1/v2 사용가능
 
-#value 값 변경
-c1.value = 20
-print(c1.value)
+    def substract(self): # 인스턴스 메소드 # self : 인스턴스 변수
+        return self.v1 - self.v2  # self.v1 : 인스턴스 변수 v1/v2 사용가능
+ 
+c1 = Cal(10,10)
+print(c1.add())
 
-c1.show()
+c2 = Cal(40,50)
+print(c1.substract())
