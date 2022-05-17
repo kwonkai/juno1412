@@ -9,8 +9,6 @@ y = [81, 93, 91, 97]
 mx = np.mean(x)
 my = np.mean(y)
 
-print("x 평균값:", mx)
-print("y 평균값:", my)
 
 # 분모 
 # (x 각 원소값 - x평균값) 제곱
@@ -23,9 +21,8 @@ def top(x, mx, y, my):
     for i in range(len(x)): # x개수만큼 실행
         d += (x[i] - mx) * (y[i] - my)
     return d
+    
 dividend = top(x, mx, y, my)
-print("분모", divisor)
-print("분자", dividend)
 
 # 기울기 a
 a = dividend / divisor

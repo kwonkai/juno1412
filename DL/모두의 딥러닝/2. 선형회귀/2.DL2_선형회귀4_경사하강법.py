@@ -4,7 +4,6 @@
 from random import seed
 import numpy as np
 import tensorflow as tf
-tf.__version__
 
 # data list 만들기
 # i[0] = list 첫번째 값, i[1] = list 두번째 값
@@ -30,7 +29,7 @@ rmse = tf.sqrt(tf.reduce_mean(tf.square(y - y_data)))
 gradient_decent = tf.train.GradientDescentOptimizer(learn_rate).minimize(rmse)
 
 # tensorflow를 이용한 학습
-with tf.compat.v1.Session() as sess:
+with tf.Session() as sess:
     # 변수 초기화
     sess.run(tf.global_variables_initializer())
     # 2001번 실행(0번 째를 포함하므로)
@@ -59,7 +58,7 @@ y = a1*x1 + a2*x2 +b
 
 # 실행세션 만들기
 
-with tf.compat.v1.Session() as sess:
+with tf.Session() as sess:
     # 변수 초기화
     sess.run(tf.compat.v1.global_variables_initializer())
     # 2001번 실행(0번 째를 포함하므로)
