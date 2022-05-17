@@ -1,4 +1,5 @@
-﻿# 선형회귀
+﻿# 선형회귀 
+# 선형회귀를 이용한 predict
 
 # 라이브러리 설정
 import pandas as pd
@@ -23,8 +24,11 @@ dataset = data.values # data.values = index를 제외한 나머지 칼럼들의 
 X = dataset[:, 0:13]
 Y = dataset[:, 13]
 
+
 # 훈련셋, 테스트셋 구분
 x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.25, random_state=seed)
+
+
 
 # 딥러닝 모델 구축
 model = Sequential()
@@ -43,4 +47,21 @@ for i in range(10):
     label = y_test[i]
     prediction = Y_prediction[i]
     print("실제가격: {:.3f}, 예상가격: {:.3f}".format(label, prediction))
+
+
+# 선형회귀 모델
+from sklearn.linear_model import LinearRegression
+
+lr = LinearRegression()
+lr.fit(x_train, y_train)
+
+y_predict = lr.predict(x_test)
+y_predict[:10]
+
+import matplotlib.pyplot as plt
+
+for i in range (10):
+    real = Y[i]
+    prediction = y_predict[i]
+    print("실제가격 : {:.3f}, 예상가격 : {:.3f}".format(real, prediction))
 
