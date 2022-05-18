@@ -3,7 +3,6 @@
 
 import numpy as np
 import tensorflow as tf
-tf.__version__
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
 # data list 만들기

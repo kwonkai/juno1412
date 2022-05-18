@@ -27,7 +27,7 @@ sns.pairplot(data, hue='species');
 # 데이터셋
 dataset = data.values
 X = dataset[:,0:4].astype(float)
-Y_obj = dataset[:,4]
+Y_obj = dataset[:,4] # class : iris 속성값
 
 # 원핫 인코딩
 e = LabelEncoder()
@@ -38,7 +38,7 @@ Y_encoded = np_utils.to_categorical(Y)
 # softmax 활성화함수
 model = Sequential()
 model.add(Dense(16, input_dim=4, activation='relu'))
-model.add(Dense(3, activation="softmax"))
+model.add(Dense(3, activation="softmax")) # 다중분류이므로 출력층 node 수 3개
 
 # model compile
 model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=['accuracy'])

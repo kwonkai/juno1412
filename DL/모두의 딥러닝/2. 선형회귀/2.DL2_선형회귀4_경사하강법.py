@@ -41,20 +41,31 @@ with tf.Session() as sess:
 
 ### 다중 선형 회귀 ###
 import tensorflow as tf
-data = [[2, 0, 81], [4, 4, 93], [6, 2, 91], [8,3,97]]
+data = [[2, 0, 2, 81], [4, 4, 2, 93], [6, 2, 4, 91], [8, 3, 4, 97]]
 
-# 2개의 독립변수 만들기
+# 3개의 독립변수 만들기
 x1 = [x_row1[0] for x_row1 in data]
 x2 = [x_row2[1] for x_row2 in data]
-y_data = [y_row[2] for y_row in data]
+x3 = [x_row3[2] for x_row3 in data]
+y_data = [y_row[3] for y_row in data]
 
-# 2개의 기울기 구하기
-a1 = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0))
-a2 = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0))
+# 3개의 기울기 구하기
+a1 = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0)) # 수업 시간
+a2 = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0)) # 과외수업횟수
+a3 = tf.Variable(tf.random.uniform([1], 0, 10, dtype=tf.float64, seed=0)) # 자습시간
 b = tf.Variable(tf.random.uniform([1], 0, 100, dtype=tf.float64, seed=0))
 
 # 새로운 1차 방정식 만들기
-y = a1*x1 + a2*x2 +b
+y = a1*x1 + a2*x2 + a3*x3 + b
+
+# 학습률
+learn_rate = 0.1
+
+# 오차값
+rmse = tf.sqrt(tf.reduce_mean(tf.square(y-y_data)))
+
+# 경사하강법
+gradient_decent = tf.train.GradientDescentOptimizer(learn_rate).minimize(rmse)
 
 # 실행세션 만들기
 
@@ -62,11 +73,11 @@ with tf.Session() as sess:
     # 변수 초기화
     sess.run(tf.compat.v1.global_variables_initializer())
     # 2001번 실행(0번 째를 포함하므로)
-    for step in range(2001):
+    for step in range(10001):
         sess.run(gradient_decent)
         # 100번마다 결과 출력
-        if step % 100 == 0:
-            print("Epoch: %.f, RMSE = %.04f, 기울기 a1 = %.4f, 기울기 a2 = %.4f, y 절편 b = %.4f" % (step, sess.run(rmse), sess.run(a1), sess.run(a2), sess.run(b)))
+        if step % 1000 == 0:
+            print("Epoch: %.f, RMSE = %.04f, 기울기 a1 = %.4f, 기울기 a2 = %.4f, 기울기 a3 = %.4f, y 절편 b = %.4f" % (step, sess.run(rmse), sess.run(a1), sess.run(a2), sess.run(a3), sess.run(b)))
 
 
 
