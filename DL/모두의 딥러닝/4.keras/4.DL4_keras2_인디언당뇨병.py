@@ -14,16 +14,17 @@ tf.set_random_seed(seed)
 
 # 데이터 로드
 data_set = pd.read_csv('C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/pima-indians-diabetes.csv', names=["pregnant", "plasma", "pressure", "thickness", "insulin", "BMI", "pedigree", "age", "class"])
-data_set.head()
+data_set
 x = data_set[:,0:8] # 속성 = 사람 특성
 y = data_set[:,8] # 클래스 =  당뇨병 여부
 
 # 상관도 그래프
-import seaborn as sns
-import matplotlib.pyplot as plt
+# import seaborn as sns
+# import matplotlib.pyplot as plt
 
-sns.pairplot(data_set, hue="class")
-plt.show()
+# sns.pairplot(data_set, hue="class")
+# plt.figure(figsize=(10,5))
+# plt.show()
 
 # 딥러닝 모델 설정
 model = Sequential()

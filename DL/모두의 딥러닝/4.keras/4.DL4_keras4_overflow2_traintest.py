@@ -24,7 +24,6 @@ X = dataset[:, 0:60]
 Y_obj = dataset[:, 60]
 
 # 문자열 변환
-# 라벨 인코딩 -> 원-핫 인코딩
 e = LabelEncoder()
 e.fit(Y_obj)
 Y = e.transform(Y_obj)
@@ -45,4 +44,4 @@ model.compile(loss="mean_squared_error", optimizer='adam', metrics=['accuracy'])
 # # 딥러닝 모델 실행
 model.fit(x_train, y_train, epochs=200, batch_size = 5)
 
-print("\n Accuracy: %4f" % (model.evaluate(X,Y)[1]))
+print("\n Accuracy: %4f" % (model.evaluate(x_test, y_test)[1]))

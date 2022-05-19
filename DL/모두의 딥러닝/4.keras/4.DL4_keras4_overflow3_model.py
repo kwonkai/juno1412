@@ -31,7 +31,7 @@ e.fit(Y_obj)
 Y = e.transform(Y_obj)
 
 # train_test_split
-x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=seed) # 왜 seed? 초기화? 일정함?
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=seed) 
 
 
 # 딥러닝 모델 설정

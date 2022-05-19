@@ -50,23 +50,20 @@ modelpath = "C:/Users\kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/model/{ep
 
 # varbose =1 학습상황 보여주기
 # safe_best_only = 모델이 앞서 저장한 모델보다 나아졌을 때만 저장
-checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=1, safe_best_only=True) 
+checkpointer = ModelCheckpoint(filepath=modelpath, monitor='val_loss', verbose=1, save_best_only=True)
 
-history = model.fit(X, Y, validation_split=0.33, epochs=3500, batch_size=500)
+# 모델 실행 및 저장
+history = model.fit(X, Y, validation_split=0.33, epochs=1500, batch_size=500)
 
-# Y의 오차값
-y_vloss = history.history['val_loss']
+# y_vloss에 테스트셋으로 실험 결과의 오차 값을 저장
+y_vloss=history.history['val_loss']
 
-# Y읠 정확도
-y_acc = history.history['acc']
+# y_acc 에 학습 셋으로 측정한 정확도의 값을 저장
+y_acc=history.history['acc']
 
-# 결과값 시각화
-# 값 지정 후, 정확도는파란색 오차는 파랑색
+# x값을 지정하고 정확도를 파란색으로, 오차를 빨간색으로 표시
 x_len = np.arange(len(y_acc))
-plt.plot(x_len, y_vloss,"o", c='red', markersize =3)
-plt.plot(x_len, y_acc,"o", c='blue', markersize =3)
+plt.plot(x_len, y_vloss, "o", c="red", markersize=3)
+plt.plot(x_len, y_acc, "o", c="blue", markersize=3)
 
-
-# 결과값 출력하기
 plt.show()
-
