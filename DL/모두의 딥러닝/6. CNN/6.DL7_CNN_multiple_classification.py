@@ -26,8 +26,6 @@ Y_test = to_categorical(Y_test, 10)
 # 모델 프레임 설정
 model = Sequential()
 model.add(Dense(512, input_dim=784, activation='relu'))
-model.add(Dense(512, activation='relu'))
-model.add(Dense(206, activation='relu'))
 model.add(Dense(10, activation='softmax')) # 0~9 숫자 10개 분류
 
 # 모델 컴파일

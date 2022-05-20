@@ -44,4 +44,5 @@ model.compile(loss="mean_squared_error", optimizer='adam', metrics=['accuracy'])
 # # 딥러닝 모델 실행
 model.fit(x_train, y_train, epochs=200, batch_size = 5)
 
-print("\n Accuracy: %4f" % (model.evaluate(x_test, y_test)[1]))
+print("\n Train Accuracy: %4f" % (model.evaluate(x_train, y_train)[1]))
+print("\n Test Accuracy: %4f" % (model.evaluate(x_test, y_test)[1]))
