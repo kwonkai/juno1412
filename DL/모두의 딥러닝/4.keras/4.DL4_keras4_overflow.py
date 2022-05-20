@@ -16,6 +16,7 @@ tf.set_random_seed(seed)
 
 # 데이터 확인 및 분석
 data = pd.read_csv("C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/sonar.csv", header=None)
+data.shape
 
 dataset = data.values
 X = dataset[:, 0:60]

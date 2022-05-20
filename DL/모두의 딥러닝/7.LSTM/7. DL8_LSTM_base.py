@@ -26,29 +26,28 @@ tf.set_random_seed(seed)
 category = np.max(y_train) + 1
 
 # 데이터 전처리
-# pad_sequence(maxlen) = 단어 수를 100개로 맞춰라 
-# 단어 > 100 이라면 나머지 버림
-# 단어 < 100 이라면 나머지 0으로 채움
-x_train = sequence.pad_sequences(x_train, maxlen=100)
+# maxlen, One-Hot Encoding
+x_train = sequence.pad_sequences(x_train, maxlen=100) 
 x_test = sequence.pad_sequences(x_test, maxlen=100)
-
-# One-Hot Encoding
-y_trian = np_utils.to_categorical(y_train)
+y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 
 # 딥러닝 모델 설정
-# Embedding =?
 model = Sequential()
 model.add(Embedding(1000, 100))
 model.add(LSTM(100, activation='tanh'))
 model.add(Dense(46, activation='softmax'))
-# model.add(Dense(1, activation='sigmoid'))
 
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', \
+              optimizer='adam', metrics=['accuracy'])
+
+
+model.summary()
 
 # 모델 실행
 history = model.fit(x_train, y_train, epochs=20, batch_size=50, validation_data=(x_test, y_test))
 
+print("\n Train Accuracy: %.4f" % (model.evaluate(x_train, y_train)[1]))
 print("\n Test Accuracy: %.4f" % (model.evaluate(x_test, y_test)[1]))
 
 # 테스트 셋의 오차

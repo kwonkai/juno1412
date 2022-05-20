@@ -46,10 +46,11 @@ model.summary()
 
 model.compile(loss ='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-
-
 # 모델 실행
 history = model.fit(x_train, y_train, epochs=20, batch_size = 200, validation_data=(x_test, y_test))
+
+print("\n Train Accuracy: %.4f" % (model.evaluate(x_train, y_train)[1]))
+print("\n Test Accuracy: %.4f" % (model.evaluate(x_test, y_test)[1]))
 
 # 테스트 셋의 오차
 y_vloss = history.history['val_loss']

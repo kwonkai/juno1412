@@ -21,6 +21,7 @@ tf.set_random_seed(seed)
 
 # 데이터 확인 및 분석
 data_wine = pd.read_csv("C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/wine.csv", header=None)
+data_wine
 wine = data_wine.sample(frac=0.15) # frac =1 ? frac = 전체 row에서 몇%의 데이터를 return할 건지 설정
 
 
@@ -37,8 +38,9 @@ model.add(Dense(12, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
-# 딥러닝 모델 컴파일&실행
-model.compile(loss = 'binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss = 'binary_crossentropy', \
+              optimizer='adam', \
+              metrics=['accuracy'])
 
 # 모델 설정
 MODEL_DIR = 'C:/Users\kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/model/' # 저장 폴더 생성하기

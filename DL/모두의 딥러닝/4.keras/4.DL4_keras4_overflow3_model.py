@@ -45,10 +45,11 @@ model.compile(loss="mean_squared_error", optimizer='adam', metrics=['accuracy'])
 
 # # 딥러닝 fit, 모델 실행
 model.fit(x_train, y_train, epochs=200, batch_size = 5)
-model.save('C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/my_model.h5') #모델저장
+
+#모델저장
+model.save('C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/my_model.h5') 
 
 # 모델 불러오기
-del model # 테스트를 위해 메모리 내의 모델 삭제
 model = load_model('C:/Users/kwonk/juno1412-1/juno1412/DL/모두의 딥러닝/dataset/my_model.h5') # 모델 새로 불러오기
 
 
