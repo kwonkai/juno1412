@@ -1,7 +1,7 @@
-# 코드 트레이닝 폐소리 데이터 구분하기
-# import PIL
-# from PIL import Image 
-# import cv2
+# # 코드 트레이닝 폐소리 데이터 구분하기
+import PIL
+from PIL import Image 
+import cv2
 
 
 import pandas as pd
@@ -12,6 +12,7 @@ from tensorflow.keras import models, layers
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.models import load_model
 import matplotlib.pyplot as plt
+from tensorflow.keras import optimizers
 
 ## 3.데이터 train/test/valudation set 분류
 import os, shutil
@@ -24,12 +25,12 @@ import natsort
 
 # 1. 모든데이터
 # path 경로 
-data_path = '/home/juno/workspace/codetrain/dataset' # 폴더경로
-none_path = '/home/juno/workspace/codetrain/none'
-none_path2 = '/home/juno/workspace/codetrain/png_adc_team_none'
-fail_path = '/home/juno/workspace/codetrain/wheeze'
-fail_path2 = '/home/juno/workspace/codetrain/both'
-train_path = '/home/juno/workspace/codetrain/trainset'
+# data_path = '/home/juno/workspace/codetrain/dataset' # 폴더경로
+# none_path = '/home/juno/workspace/codetrain/none'
+# none_path2 = '/home/juno/workspace/codetrain/png_adc_team_none'
+# fail_path = '/home/juno/workspace/codetrain/wheeze'
+# fail_path2 = '/home/juno/workspace/codetrain/both'
+# train_path = '/home/juno/workspace/codetrain/trainset'
 
 
 
@@ -122,94 +123,94 @@ train_path = '/home/juno/workspace/codetrain/trainset'
 #     dst = os.path.join(train_path, pic)
 #     shutil.copy(src,dst)
 
-# print("This folder has already been created")
+# # print("This folder has already been created")
 
 
 
-# # 1-2훈련/검증/테스트 분할 폴더 생성 + 파일 복사
-# # 함수화, 줄여야함...
+# # # 1-2훈련/검증/테스트 분할 폴더 생성 + 파일 복사
+# # # 함수화, 줄여야함...
 
-# data_path ='/home/juno/workspace/codetrain/trainset'
-# train_pic = os.path.join(data_path, 'train')
-# os.mkdir(train_pic)
-# val_pic = os.path.join(data_path, 'val')
-# os.mkdir(val_pic)
-# test_pic = os.path.join(data_path, 'test')
-# os.mkdir(test_pic)
+# # data_path ='/home/juno/workspace/codetrain/trainset'
+# # train_pic = os.path.join(data_path, 'train')
+# # os.mkdir(train_pic)
+# # val_pic = os.path.join(data_path, 'val')
+# # os.mkdir(val_pic)
+# # test_pic = os.path.join(data_path, 'test')
+# # os.mkdir(test_pic)
 
-# # train/validation/test 디렉터리의 none/fail data
-# train_none_dir = os.path.join(train_pic, 'none')
-# os.mkdir(train_none_dir)
+# # # train/validation/test 디렉터리의 none/fail data
+# # train_none_dir = os.path.join(train_pic, 'none')
+# # os.mkdir(train_none_dir)
 
-# train_fail_dir = os.path.join(train_pic, 'fail')
-# os.mkdir(train_fail_dir)
+# # train_fail_dir = os.path.join(train_pic, 'fail')
+# # os.mkdir(train_fail_dir)
 
-# # validation
-# val_none_dir = os.path.join(val_pic, 'none')
-# os.mkdir(val_none_dir)
+# # # validation
+# # val_none_dir = os.path.join(val_pic, 'none')
+# # os.mkdir(val_none_dir)
 
-# val_fail_dir = os.path.join(val_pic, 'fail')
-# os.mkdir(val_fail_dir)
+# # val_fail_dir = os.path.join(val_pic, 'fail')
+# # os.mkdir(val_fail_dir)
 
-# # test
-# test_none_dir = os.path.join(test_pic, 'none')
-# os.mkdir(test_none_dir)
+# # # test
+# # test_none_dir = os.path.join(test_pic, 'none')
+# # os.mkdir(test_none_dir)
 
-# test_fail_dir = os.path.join(test_pic, 'fail')
-# os.mkdir(test_fail_dir)
-
-
-# # 파일 복사하기
-# # 위 생성한 데이터 폴더에 none/fail 데이터 복사하기
-# # none 데이터
-# pics = ['none{}.png'.format(i) for i in range(1,2400)]
-# for pic in pics:
-#     src = os.path.join(none_path, pic)
-#     dst = os.path.join(train_none_dir, pic)
-#     shutil.copy(src,dst)
-
-# pics = ['none{}.png'.format(i) for i in range(2401, 3000)]
-# for pic in pics:
-#     src = os.path.join(none_path, pic)
-#     dst = os.path.join(val_none_dir, pic)
-#     shutil.copy(src,dst)
-
-# pics = ['none{}.png'.format(i) for i in range(3001, 3668)]
-# for pic in pics:
-#     src = os.path.join(none_path, pic)
-#     dst = os.path.join(test_none_dir, pic)
-#     shutil.copy(src,dst)
+# # test_fail_dir = os.path.join(test_pic, 'fail')
+# # os.mkdir(test_fail_dir)
 
 
-# # fail 데이터
-# pics = ['fail{}.png'.format(i) for i in range(1,480)]
-# for pic in pics:
-#     src = os.path.join(fail_path, pic)
-#     dst = os.path.join(train_fail_dir, pic)
-#     shutil.copy(src,dst)
+# # # 파일 복사하기
+# # # 위 생성한 데이터 폴더에 none/fail 데이터 복사하기
+# # # none 데이터
+# # pics = ['none{}.png'.format(i) for i in range(1,2400)]
+# # for pic in pics:
+# #     src = os.path.join(none_path, pic)
+# #     dst = os.path.join(train_none_dir, pic)
+# #     shutil.copy(src,dst)
 
-# pics = ['fail{}.png'.format(i) for i in range(481, 515)]
-# for pic in pics:
-#     src = os.path.join(fail_path, pic)
-#     dst = os.path.join(val_fail_dir, pic)
-#     shutil.copy(src,dst)
-# pics = ['fail{}.png'.format(i) for i in range(516, 640)]
-# for pic in pics:
-#     src = os.path.join(fail_path2, pic)
-#     dst = os.path.join(val_fail_dir, pic)
-#     shutil.copy(src,dst)
+# # pics = ['none{}.png'.format(i) for i in range(2401, 3000)]
+# # for pic in pics:
+# #     src = os.path.join(none_path, pic)
+# #     dst = os.path.join(val_none_dir, pic)
+# #     shutil.copy(src,dst)
 
-
-# pics = ['fail{}.png'.format(i) for i in range(641, 807)]
-# for pic in pics:
-#     src = os.path.join(fail_path2, pic)
-#     dst = os.path.join(test_fail_dir, pic)
-#     shutil.copy(src,dst)
+# # pics = ['none{}.png'.format(i) for i in range(3001, 3668)]
+# # for pic in pics:
+# #     src = os.path.join(none_path, pic)
+# #     dst = os.path.join(test_none_dir, pic)
+# #     shutil.copy(src,dst)
 
 
-# print("Data has already been copied")
+# # # fail 데이터
+# # pics = ['fail{}.png'.format(i) for i in range(1,480)]
+# # for pic in pics:
+# #     src = os.path.join(fail_path, pic)
+# #     dst = os.path.join(train_fail_dir, pic)
+# #     shutil.copy(src,dst)
 
-# cnn modeling
+# # pics = ['fail{}.png'.format(i) for i in range(481, 515)]
+# # for pic in pics:
+# #     src = os.path.join(fail_path, pic)
+# #     dst = os.path.join(val_fail_dir, pic)
+# #     shutil.copy(src,dst)
+# # pics = ['fail{}.png'.format(i) for i in range(516, 640)]
+# # for pic in pics:
+# #     src = os.path.join(fail_path2, pic)
+# #     dst = os.path.join(val_fail_dir, pic)
+# #     shutil.copy(src,dst)
+
+
+# # pics = ['fail{}.png'.format(i) for i in range(641, 807)]
+# # for pic in pics:
+# #     src = os.path.join(fail_path2, pic)
+# #     dst = os.path.join(test_fail_dir, pic)
+# #     shutil.copy(src,dst)
+
+
+# # print("Data has already been copied")
+
+# # cnn modeling
 
 # model = models.Sequential()
 
@@ -234,9 +235,10 @@ train_path = '/home/juno/workspace/codetrain/trainset'
 # model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
-# 선임님 cnn model
+# 선임님 cnn model_remodeling
+# binary -> categorical
 model = models.Sequential()
-model.add(layers.Conv2D(16, (3,3), activation = 'relu'))
+model.add(layers.Conv2D(16, (3,3), activation = 'relu', input_shape=(240,320,3)))
 model.add(layers.MaxPooling2D((2,2)))
 model.add(layers.Conv2D(16, (3,3), activation = 'relu'))
 model.add(layers.MaxPooling2D((2,2)))
@@ -245,12 +247,29 @@ model.add(layers.MaxPooling2D((2,2)))
 
 model.add(layers.Flatten())
 model.add(layers.Dense(128, activation='relu'))
-#model.add(layers.Dropout(0.5))
-model.add(layers.Dense(1, activation='sigmoid'))
+model.add(layers.Dropout(0.5))
+model.add(layers.Dense(2, activation='sigmoid'))
 
-from tensorflow.keras import optimizers
-model.compile(loss = 'binary_crossentropy', optimizer = optimizers.Adam(lr=1e-4), metrics=['accuracy'])
+model.compile(loss = 'binary_crossentropy', optimizer = optimizers.Adam(lr=1e-4), metrics=['binary_accuracy'])
+model.summary()
 
+# 선임님_오리지널
+# model = models.Sequential()
+# model.add(layers.Conv2D(16, (3,3), activation = 'relu', input_shape=(240,320,3)))
+# model.add(layers.MaxPooling2D((2,2)))
+# model.add(layers.Conv2D(16, (3,3), activation = 'relu'))
+# model.add(layers.MaxPooling2D((2,2)))
+# model.add(layers.Conv2D(32, (1,1), activation = 'relu'))
+# model.add(layers.MaxPooling2D((2,2)))
+
+# model.add(layers.Flatten())
+# model.add(layers.Dense(128, activation='relu'))
+# model.add(layers.Dropout(0.5))
+# model.add(layers.Dense(2, activation='sigmoid'))
+
+# from tensorflow.keras import optimizers
+# model.compile(loss = 'binary_crossentropy', optimizer = optimizers.Adam(lr=1e-4), metrics=['accuracy'])
+# model.summary()
 
 
 
@@ -259,30 +278,33 @@ model.compile(loss = 'binary_crossentropy', optimizer = optimizers.Adam(lr=1e-4)
 # trainset 폴더 경로
 train_pic = ('/home/juno/workspace/codetrain/trainset/train')
 test_pic = ('/home/juno/workspace/codetrain/trainset/test')
-val_pic = ('/home/juno/workspace/codetrain/trainset/val')
+# val_pic = ('/home/juno/workspace/codetrain/trainset/val')
 
 ## generator
 # def generator_train():
 train_datagen = ImageDataGenerator(rescale=1./255)
 test_datagen = ImageDataGenerator(rescale=1./255)
-val_datagen = ImageDataGenerator(rescale=1./255)
+# val_datagen = ImageDataGenerator(rescale=1./255)
 
 
 train_generator = train_datagen.flow_from_directory(
         train_pic, # 폴더 지정
+        target_size=(240,320),
         batch_size=256,
-        class_mode='binary'
+        class_mode='categorical'
 )
-val_generator = test_datagen.flow_from_directory(
-        val_pic, # 폴더 지정
-        batch_size=256,
-        class_mode='binary'
-)
+# val_generator = val_datagen.flow_from_directory(
+#         val_pic, # 폴더 지정
+#         target_size=(240,320),
+#         batch_size=256,
+#         class_mode='categorical'
+# )
 
 test_generator = test_datagen.flow_from_directory(
         test_pic, # 폴더 지정
+        target_size=(240,320),
         batch_size=256,
-        class_mode='binary'
+        class_mode='categorical'
 )
 
 for data_batch, labels_batch in train_generator:
@@ -295,7 +317,7 @@ model_dir = '/home/juno/workspace/codetrain/model'
 if not os.path.exists(model_dir):
     os.mkdir(model_dir)
 
-modelpath = '/home/juno/workspace/codetrain/model/2thou_val{epoch:04d}-{loss:.4f}.hdf5'
+modelpath = '/home/juno/workspace/codetrain/model/one_binary_{epoch:04d}-{loss:.4f}.hdf5'
 
 # model checkpoint : earlystop, checkpoint
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
@@ -311,27 +333,28 @@ checkpointer = ModelCheckpoint(filepath = modelpath, monitor='val_loss', verbose
 history = model.fit_generator(
     train_generator,
     steps_per_epoch = 12,
-    epochs = 2000,
-    validation_data = val_generator,
+    epochs = 50,
+    validation_data = test_generator,
     validation_steps = 3,
-    callbacks = [checkpointer],
+    callbacks=[checkpointer]
+
 )
 
 
 # # model save
-model.save('best_model_val_nonstop.hdf5')
-# lung_model = load_model('best_model3.hdf5')
+model.save('test_binary.h5')
+# lung_model = load_model('new_model.h5')
 
 
 # history save
-np.save('best_model_hist_val_nonstop.npy', history.history)
-# history = np.load('best_model_his3.npy', allow_pickle='True').item()
+np.save('test_binary.npy', history.history)
+# # history = np.load('best_model_his3.npy', allow_pickle='True').item()
 
 
-# history save
-import json
-with open('best_model_hist_val_nonstop.json', 'w') as f:
-    json.dump(history.history, f)
+# # history save
+# import json
+# with open('best_model_hist_val_nonstop.json', 'w') as f:
+#     json.dump(history.history, f)
 
 
 
