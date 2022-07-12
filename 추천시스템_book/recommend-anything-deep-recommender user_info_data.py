@@ -5,6 +5,7 @@ import pandas as pd
 # To do linear algebra
 import numpy as np
 
+import statistics
 
 # To create plots
 import matplotlib.pyplot as plt
@@ -42,60 +43,7 @@ from scipy.sparse import coo_matrix
 from scipy.sparse import vstack
 
 
-
-# Load data for all movies
-movie_titles = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_files/netflix/movie_titles.csv', 
-                           encoding = 'ISO-8859-1', 
-                           header = None, 
-                           names = ['Id', 'Year', 'Name']).set_index('Id')
-
-print('Shape Movie-Titles:\t{}'.format(movie_titles.shape))
-
-
-# Load a movie metadata dataset
-movie_metadata = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_files/deeplearning/movies_metadata.csv', low_memory=False)[['original_title', 'overview', 'vote_count']].set_index('original_title').dropna()
-# Remove the long tail of rarly rated moves
-movie_metadata = movie_metadata[movie_metadata['vote_count']>10].drop('vote_count', axis=1)
-
-print('Shape Movie-Metadata:\t{}'.format(movie_metadata.shape))
-movie_metadata.sample(5)
-
-# Load single data-file
-df_raw = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_files/netflix/combined_data_1.txt', header=None, names=['User', 'Rating', 'Date'], usecols=[0, 1, 2])
-
-# Find empty rows to slice dataframe for each movie
-tmp_movies = df_raw[df_raw['Rating'].isna()]['User'].reset_index()
-movie_indices = [[index, int(movie[:-1])] for index, movie in tmp_movies.values]
-
-# Shift the movie_indices by one to get start and endpoints of all movies
-# deque : 양방향 자료형
-# rotate(-1) : 좌우로 순서 전환 [1, 2, 3] -> -1 : [2, 3, 1], 1: [3, 1, 2]
-shifted_movie_indices = deque(movie_indices)
-shifted_movie_indices.rotate(-1)
-
-# Gather all dataframes
-user_data = []
-
-# Iterate over all movies
-# movie_indice = 원본, shift_movie_indices = 앞 2개 값이 돌아간 movie_indence
-for [df_id_1, movie_id], [df_id_2, next_movie_id] in zip(movie_indices, shifted_movie_indices):
-    
-    # Check if it is the last movie in the file
-    if df_id_1<df_id_2:
-        tmp_df = df_raw.loc[df_id_1+1:df_id_2-1].copy()
-    else:
-        tmp_df = df_raw.loc[df_id_1+1:].copy()
-    
-    # movie_id 컬럼 만들기
-    tmp_df['Movie'] = movie_id
-    
-    # movie_id 컬럼 채워넣기
-    user_data.append(tmp_df)
-
-# Combine all dataframes
-df = pd.concat(user_data)
-
-
+### 1. movielens 데이터 파일 불러오기
 # u.user 파일을 DataFrame으로 읽기 
 u_cols = ['user_id', 'age', 'sex', 'occupation', 'zip_code']
 users = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_reco_book/u.user', sep='|', names=u_cols, encoding='latin-1')
@@ -110,113 +58,115 @@ movies = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_rec
 movies = movies[['movie_id', 'title']]
 
 # u.data 파일을 DataFrame으로 읽기
+# user_rating 전처리 : timestamp 제거, rating 내부의 rating 값 이상의 데이터 제거
 r_cols = ['user_id', 'movie_id', 'rating', 'timestamp']
 ratings = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_reco_book/u.data', sep='\t', names=r_cols, encoding='latin-1') 
 ratings = ratings.drop('timestamp', axis=1).dropna()
 ratings[['user_id', 'rating']] = ratings[['user_id', 'rating']].astype(float).astype(int)
-ratings['rating'] = (ratings['rating']<6).index
-
+ratings = ratings[ratings.rating < 6]
+ratings = ratings[ratings.rating > -1]
 user_metadata = pd.merge(users, ratings, on='user_id')
-print(user_data)
+print(user_metadata)
 
 
-
-'''
-# like/unlike 분포 1 (0 : 1점, 2점 / 1 : 3점, 4점, 5점)
-# rating 데이터 type 변경 후, replace로 rating 기준 변경하기
-df['Rating'] = df['Rating'].astype(int)
-df = df.replace({'Rating':{1:0, 2:0, 3:1, 4:1, 5:1}})
-del user_data, df_raw, tmp_movies, tmp_df, shifted_movie_indices, movie_indices, df_id_1, movie_id, df_id_2, next_movie_id
-print('Shape User-Ratings:\t{}'.format(df.shape))
-df.sample(5)
-'''
-# like/unlike 분포 2
-df['Rating'] = df['Rating'].astype(int)
-df = df.replace({'Rating':{1:-1, 2:0, 3:0, 4:1, 5:1}})
-df['Rating'].value_counts()
-del user_data, df_raw, tmp_movies, tmp_df, shifted_movie_indices, movie_indices, df_id_1, movie_id, df_id_2, next_movie_id
-print('Shape User-Ratings:\t{}'.format(df.shape))
-df.sample(5)
-
-
-
-
-
-
-
-
-
-
-
-
-
+### 2.유효성 검사
+user_metadata_userrating = user_metadata.groupby('user_id')['rating'].count()
+statistics.mean(user_metadata_userrating)
+user_metadata_contentrating = user_metadata.groupby('movie_id')['rating'].count()
+statistics.mean(user_metadata_contentrating)
 
 # Filter sparse movies
-min_movie_ratings = 10000
-filter_movies = (df['Movie'].value_counts()>min_movie_ratings)
+min_movie_ratings = 50
+filter_movies = (user_metadata['movie_id'].value_counts()>min_movie_ratings)
 filter_movies = filter_movies[filter_movies].index.tolist()
 
 # Filter sparse users
-min_user_ratings = 200
-filter_users = (df['User'].value_counts()>min_user_ratings)
+min_user_ratings = 10
+filter_users = (user_metadata['user_id'].value_counts()>min_user_ratings)
 filter_users = filter_users[filter_users].index.tolist()
 
 # Actual filtering
-df_filterd = df[(df['Movie'].isin(filter_movies)) & (df['User'].isin(filter_users))]
+df_filterd = user_metadata[(user_metadata['movie_id'].isin(filter_movies)) & (user_metadata['user_id'].isin(filter_users))]
 del filter_movies, filter_users, min_movie_ratings, min_user_ratings
-print('Shape User-Ratings unfiltered:\t{}'.format(df.shape))
+print('Shape User-Ratings unfiltered:\t{}'.format(user_metadata.shape))
 print('Shape User-Ratings filtered:\t{}'.format(df_filterd.shape))
 
 
 
-# # Shuffle DataFrame
-# df_filterd = df_filterd.drop('Date', axis=1).sample(frac=1).reset_index(drop=True)
-# # Testingsize
-# n = 100000
-# # Split train- & testset
-# df_train = df_filterd[:-n]
-# df_test = df_filterd[-n:]
+## 데이터 섞기 -> 순서대로 되어있는 데이터 섞어 train_test 잘 섞이게 함
+df_filterd = df_filterd.drop('zip_code', axis=1).sample(frac=1).reset_index(drop=True)
+
+n = 6700
+
+df_filterd_train = df_filterd[:10000]
+df_filterd_test = df_filterd[-n:]
 
 
-
-# Create a user-movie matrix with empty values
-# df_p = df_train.pivot_table(index='User', columns='Movie', values='Rating')
-# print('Shape User-Movie-Matrix:\t{}'.format(df_p.shape))
-# df_p.sample(3)
 
 # Create user- & movie-id mapping
-user_id_mapping = {id:i for i, id in enumerate(df['User'].unique())}
-movie_id_mapping = {id:i for i, id in enumerate(df['Movie'].unique())}
+user_id_mapping = {id:i for i, id in enumerate(user_metadata['user_id'].unique())}
+movie_id_mapping = {id:i for i, id in enumerate(user_metadata['movie_id'].unique())}
 
 # Use mapping to get better ids
-df['User'] = df['User'].map(user_id_mapping)
-df['Movie'] = df['Movie'].map(movie_id_mapping)
+user_metadata['user_id'] = user_metadata['user_id'].map(user_id_mapping)
+user_metadata['movie_id'] = user_metadata['movie_id'].map(movie_id_mapping)
 
 
 ##### Combine both datasets to get movies with metadata
 # Preprocess metadata
-# metadata : title, overview 정보
-tmp_metadata = movie_metadata.copy()
-tmp_metadata.index = tmp_metadata.index.str.lower()
-print(tmp_metadata)
+# users : user_id age sex occupation zip_code
+user_info = users.copy()
+user_info = user_info.drop('zip_code', axis=1)
 
-# Preprocess titles
-tmp_titles = movie_titles.drop('Year', axis=1).copy()
-# 기존 index = id -> index reset 후 name(영화제목) 컬럼을 인덱스로 변경
-# name(영화제목) 인덱스 소문자로 변경
-tmp_titles = tmp_titles.reset_index().set_index('Name')
-tmp_titles.index = tmp_titles.index.str.lower()
-print(tmp_titles)
+# user 정보 나누기 : 나이 성별 직업
+user_age = user_info[['user_id', 'age']].set_index('user_id')
+user_sex = user_info[['user_id', 'sex']].set_index('user_id')
+user_occ = user_info[['user_id', 'occupation']].set_index('user_id')
 
-# Combine titles and metadata
-# 영화 제목 데이터에 metadata(영화 정보)를 join
-# dropna()로 결측치 제거 후, index = Id로 설정
-# overview 컬럼은 string형 소문자로 바꾸기
-# df_id_descriptions = join되는 항목만 남아서 movid_id : 17770 -> 6938만 남음
-df_id_descriptions = tmp_titles.join(tmp_metadata).dropna().set_index('Id')
-df_id_descriptions['overview'] = df_id_descriptions['overview'].str.lower()
-print(df_id_descriptions)
-del tmp_metadata,tmp_titles
+
+# tf_idf (문장-단어 벡터화) 행렬
+# STOP_WORD =? 
+tfidf = TfidfVectorizer()
+# tfidf_hybrid_age = tfidf.fit_transform(user_age['age'])/
+tfidf_hybrid_sex = tfidf.fit_transform(user_age['sex'])
+tfidf_hybrid_occ = tfidf.fit_transform(user_age['occupation'])
+
+mapping_age = {id:i for i, id in enumerate(tfidf_hybrid_age.index.unique())}
+mapping_sex = {id:i for i, id in enumerate(tfidf_hybrid_sex.index.unique())}
+mapping_occ = {id:i for i, id in enumerate(tfidf_hybrid_occ.index.unique())}
+
+
+# df_hybrid_train shape : (300000, )
+# tfidf_hybrid shape : (1, 24144)
+train_tfidf = []
+# Iterate over all movie-ids and save the tfidf-vector
+for id in df_filterd_train[''].values:
+    index = mapping[id]
+    train_tfidf.append(tfidf_hybrid[index])
+    
+test_tfidf = []
+# Iterate over all movie-ids and save the tfidf-vector
+for id in df_hybrid_test['Movie'].values:
+    index = mapping[id]
+    test_tfidf.append(tfidf_hybrid[index])
+print(test_tfidf)
+
+
+# Stack the sparse matrices
+# train_tfidf = train_tfidf.transfose()/
+# train_tfidf = train_tfidf.stack()
+# sparse 쌓기
+# 1: [0,...,25] 2:[0,...35] -> 
+train_tfidf = vstack(train_tfidf)
+print(train_tfidf)
+test_tfidf = vstack(test_tfidf)
+train_tfidf = train_tfidf.toarray()
+test_tfidf = test_tfidf.toarray()
+
+
+
+
+
 
 
 # Filter all ratings with metadata
