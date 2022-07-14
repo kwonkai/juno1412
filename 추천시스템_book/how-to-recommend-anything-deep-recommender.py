@@ -56,14 +56,14 @@ print('Shape Movie-Titles:\t{}'.format(movie_titles.shape))
 movie_metadata = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_files/deeplearning/movies_metadata.csv', low_memory=False)[['original_title', 'overview', 'vote_count']].set_index('original_title').dropna()
 # Remove the long tail of rarly rated moves
 movie_metadata = movie_metadata[movie_metadata['vote_count']>10].drop('vote_count', axis=1)
-
 print('Shape Movie-Metadata:\t{}'.format(movie_metadata.shape))
-movie_metadata.sample(5)
+
+
 
 # Load single data-file
 df_raw = pd.read_csv('/home/juno/workspace/user_collaborative_filtering/data_files/netflix/combined_data_1.txt', header=None, names=['User', 'Rating', 'Date'], usecols=[0, 1, 2])
-
 # Find empty rows to slice dataframe for each movie
+# df_raw['Rating'] 중 결측치(1:, 2ㅣ, 3:) 확인
 tmp_movies = df_raw[df_raw['Rating'].isna()]['User'].reset_index()
 movie_indices = [[index, int(movie[:-1])] for index, movie in tmp_movies.values]
 
@@ -73,6 +73,8 @@ movie_indices = [[index, int(movie[:-1])] for index, movie in tmp_movies.values]
 shifted_movie_indices = deque(movie_indices)
 shifted_movie_indices.rotate(-1)
 
+
+
 # Gather all dataframes
 user_data = []
 
@@ -81,6 +83,7 @@ user_data = []
 for [df_id_1, movie_id], [df_id_2, next_movie_id] in zip(movie_indices, shifted_movie_indices):
     
     # Check if it is the last movie in the file
+    # 같은 내용의 파일에 1개만 retato로 돌려서 다음 유저의 평가 차이만큼 movie_id 컬럼으로 추가한다.
     if df_id_1<df_id_2:
         tmp_df = df_raw.loc[df_id_1+1:df_id_2-1].copy()
     else:
@@ -89,7 +92,7 @@ for [df_id_1, movie_id], [df_id_2, next_movie_id] in zip(movie_indices, shifted_
     # movie_id 컬럼 만들기
     tmp_df['Movie'] = movie_id
     
-    # movie_id 컬럼 채워넣기
+    # 빈 user_data 리스트에 tmp_df[user, rating, date, movie_id] 컬럼 채우기
     user_data.append(tmp_df)
 
 # Combine all dataframes
@@ -108,7 +111,7 @@ df.sample(5)
 # Rating : 1(평가하지 않음) | Rating 2,3(싫어요) | Rating 4,5(좋아요)
 # Rating : -1 or NaN(평가하지 않음) | Rating 0(싫어요) | Rating 1(좋아요)
 df['Rating'] = df['Rating'].astype(int)
-df = df.replace({'Rating':{1:np.NaN, 2:0, 3:0, 4:1, 5:1}})
+# df = df.replace({'Rating':{1:0, 2:0, 3:0, 4:1, 5:1}})
 del user_data, df_raw, tmp_movies, tmp_df, shifted_movie_indices, movie_indices, df_id_1, movie_id, df_id_2, next_movie_id
 print('Shape User-Ratings:\t{}'.format(df.shape))
 df.sample(5)
@@ -195,6 +198,9 @@ print(df_id_descriptions)
 print(df_hybrid1)
 print(df_hybrid)
 
+# data normalization(데이터 정규화 : 0.2, 0.4, 0.6, 0.8, 1.0)
+df_hybrid['Rating'] = df_hybrid['Rating'] / 5
+
 # Split train- & testset
 n = 100000
 df_hybrid = df_hybrid.sample(frac=1).reset_index(drop=True)
@@ -219,6 +225,7 @@ print(tfidf_hybrid)
 
 # mapping = movie_id, idx mapping, 
 # 데이터 개수 6938개 -> 6104 : unique() 유일 값만 거르기
+# id 중복 + overview 중복 제거
 mapping = {id:i for i, id in enumerate(df_id_descriptions.index.unique())}
 print(mapping)
 
@@ -249,6 +256,12 @@ print(train_tfidf)
 test_tfidf = vstack(test_tfidf)
 train_tfidf = train_tfidf.toarray()
 test_tfidf = test_tfidf.toarray()
+
+
+
+#### dataprame to list
+# df_hybrid['User'] = df_hybrid['User'].astype(int).tolist()
+# df_hybrid['Movie'] = df_hybrid['Movie'].astype(int).tolist()
 
 
 
@@ -300,13 +313,13 @@ model.summary()
 model.fit([df_hybrid_train['User'], df_hybrid_train['Movie'], train_tfidf],
           df_hybrid_train['Rating'],
           batch_size=128,
-          epochs=30,
+          epochs=3,
           validation_split=0.2,
           shuffle=True,
           verbose=1)
 
 
-model.save('/home/juno/workspace/user_collaborative_filtering/model_save/best_model_history/hybrid_deeplearning_movie3.h5')
+model.save('/home/juno/workspace/user_collaborative_filtering/model_save/best_model_history/re_normalizationg_epoch3_hybrid_deeplearning_movie3.h5')
 # np.save('/home/juno/workspace/user_collaborative_filtering/model_save/best_model_history/hybrid_deeplearning_movie3.npy', model.history)
 
 
