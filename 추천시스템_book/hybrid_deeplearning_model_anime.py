@@ -82,13 +82,12 @@ filtered_rating = pd.merge(filtered_rating,  anime, on='anime_id')
 
 # 유저가 시청했지만 평가하지 않은 데이터 삭제
 # 나중에 except로 유사도에서 제외시키기
-filtered_rating = filtered_rating[filtered_rating != -1]
+df_hybrid = filtered_rating[filtered_rating != -1].dropna().reset_index().drop(['index'], axis=1)
 
 
 
 # Split train- & testset
 n = 100000
-df_hybrid = filtered_rating.dropna()
 # df_hybrid = filtered_rating.sample(frac=1)
 df_hybrid_train = df_hybrid.iloc[:100000, 0:3]
 df_hybrid_test = df_hybrid.iloc[-n:, 0:3]
