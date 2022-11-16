@@ -22,7 +22,7 @@ def open_data():
 
 # 3. fashion mnist dataset check
 def open_fashion(data):
-    fig, axs = plt.subplot(1, 10, figsize=(10,10))
+    fig, axs = plt.subplots(1, 10, figsize=(10,10))
     for i in range(10):
         axs[i].imshow(data[i], cmap='gray_r')
         axs[i].axis('off')
