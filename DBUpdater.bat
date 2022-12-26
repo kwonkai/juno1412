@@ -1,0 +1,1 @@
+python C:\Users\kwonk\Downloads\개인 프로젝트\juno1412-1\증권데이터분석\DB_API\DBUpdater.py
