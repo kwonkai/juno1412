@@ -18,8 +18,8 @@ df['stddev'] = df['close'].rolling(window=20).std()
 df['upper'] = df['MA20'] + (df['stddev'] * 2)
 df['lower'] = df['MA20'] - (df['stddev'] * 2)
 
-# 볼린저밴드 밴드폭 구하기
-df['BandWidth'] = (df['close'] - df['lower']) / df['MA20'] * 100
+# 볼린저밴드 %b값 구하기
+df['PB'] = (df['close'] - df['lower']) / (df['upper'] - df['lower'])
 df = df[19:]
 
 # 볼린저 밴드 그래프 그리기
@@ -33,9 +33,9 @@ plt.fill_between(df.index, df['upper'], df['lower'], color='0.9')
 plt.title('NAVER Bollinger Band(20 day, 2 std)')
 plt.legend(loc='best')
 
-# usbplot - 볼린저 밴드 밴드폭 그래프 그리기
+# usbplot - 볼린저 밴드 %b 그래프 그리기
 plt.subplot(2, 1, 2)
-plt.plot(df.index, df['BandWidth'], color='m', label='BandWidth')
+plt.plot(df.index, df['PB'], color='b', label='%B')
 plt.grid(True)
 plt.legend(loc='best')
 plt.show()
