@@ -69,6 +69,7 @@ for i in range(0, len(df.close)):
     # 8. 세 번째 일중 강도율 그래프에서 매도 시점을 파란색 삼각형으로 표시한다.
     elif df.PB.values[i] > 0.95 and df.IIP21.values[i] < 0:
         plt.plot(df.index.values[i], 0, 'bv')
+        
 plt.grid(True)
 plt.legend(loc='best')
 plt.show()
