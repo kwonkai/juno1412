@@ -91,3 +91,65 @@ class DualMomentum:
             - start_date    : 절대 모멘텀을 구할 매수일 ('2020-01-01')   
             - end_date      : 절대 모멘텀을 구할 매도일 ('2020-12-31')
         """
+        stockList = list(rltv_momentum('code'))
+        connection = pymysql.connect(host='localhost', port=3307, db='INVESTAR', user='root', passwd='mariadb', autocommit=True)
+        cursor = connection.cursor()
+
+        sql = f"select max(date) from daily_price where date <= '{start_date}'"
+        cursor.execute(sql)
+        result = cursor.fetchone()
+
+        if (result[0] is None):
+            print("start_date : {} -> returned None".format(sql))
+            return
+        # 2. DB에서 조회된 거래일을 %Y-%m-%d 포맷 문자열로 변환해 사용자가 입력한 조회 시작일자 변수에 반영
+        start_date = result[0].strftime('%Y-%m-%d')
+
+
+        sql = f"select max(date) from daily_price where date <= '{end_date}'"
+        cursor.execute(sql)
+        result = cursor.fetchone()
+
+        if (result[0] is None):
+            print("end_date : {} -> returned None".format(sql))
+            return
+        end_date = result[0].strftime('%Y-%m-%d')
+
+        # 3. 종목별 수익률 계산
+        # 절대 모멘텀은 종목별 수익률을 구하는 것
+        rows = []
+        columns = ['code', 'company', 'old_price', 'new_price', 'returns']
+        for _, code in enumerate(stockList):
+            sql = f"select close from daily_price"\
+                f"where code='{code}' and date'{start_date}"
+            
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            
+            if (result is None):
+                continue
+            old_price = int(result[0])
+            sql = f"select close from daily_price"\
+                f"where code='{code}' and date'{end_date}"
+            cursor.execute(sql)
+            result = cursor.fetchone()
+            if (result is None):
+                continue
+
+            new_price = int(result[0])
+            returns = (new_price / old_price - 1) * 100
+            rows.append([code, self.mk.close[code], old_price, new_price, returns])
+
+
+            # 절대 모멘텀 데이터 프레임 생성
+            # 2차원 리스트에 저장한 종목별 수익률을 데이터프레임으로 변환해 수익률이 높은 순서로 출력한다
+            df = df.DataFrame(rows, columns=columns)
+            df = df[['code', 'company', 'old_price', 'new_price', 'returns']]
+            df = df.sort_values(by='returns', ascending = False)
+
+            connection.close()
+            print(df)
+            print(f"\nAbsolute Momentun ({start_date} ~ {end_date}) :"\
+                f"{df['returns'].mean():.2f}% \n")
+            
+            return 
