@@ -7,7 +7,7 @@ sys.path.append(r'C:\Users\kwonk\Downloads\개인 프로젝트\juno1412-1\증권
 import Analyzer 
 
 class DualMomentum:
-    def __init__(self):
+    def __init__(self): 
         """생성자: KRX 종목코드(codes)를 구하기 위한 MarkgetDB 객체 생성"""
         self.mk = Analyzer.MarketDB()
     
