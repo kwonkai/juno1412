@@ -1,0 +1,268 @@
+22 Dec 2022 16:56:49 >>> # import the Fraudit libraries
+22 Dec 2022 16:56:49 >>> from fraudit import *
+22 Dec 2022 16:56:49 >>> # import commonly-needed built-in libraries
+22 Dec 2022 16:56:49 >>> import string, sys, re, random, os, os.path
+22 Dec 2022 16:56:49 >>> # import data handling libraries
+22 Dec 2022 16:56:49 >>> import pandas as pd
+22 Dec 2022 16:56:49 >>> import numpy as np
+22 Dec 2022 16:57:11 >>> a = 100
+22 Dec 2022 16:57:16 >>> b_1 = 200
+22 Dec 2022 16:57:25 >>> C15 = "hello"
+22 Dec 2022 16:57:44 >>> _20 == "가나다라마바사"
+22 Dec 2022 16:58:00 >>> _20 = "가나다라마바사"
+22 Dec 2022 16:59:55 >>> a = None
+22 Dec 2022 16:59:58 >>> print(a)
+22 Dec 2022 17:02:58 >>> a, b, c, d = 1, 2, 3, 4
+22 Dec 2022 17:03:01 >>> print(a)
+22 Dec 2022 17:03:04 >>> print(b)
+22 Dec 2022 17:03:07 >>> print(c)
+22 Dec 2022 17:03:12 >>> print(d)
+22 Dec 2022 17:04:24 >>> a, b, c, d = 1, 2, 3
+22 Dec 2022 17:06:44 >>> a, b, c, d, e = "Hello Python"
+22 Dec 2022 17:07:04 >>> a = b = c = d = e = "Hello Python"
+22 Dec 2022 17:07:07 >>> print(a)
+22 Dec 2022 17:07:10 >>> print(b)
+22 Dec 2022 17:07:11 >>> print(c)
+22 Dec 2022 17:07:13 >>> print(d)
+22 Dec 2022 17:07:16 >>> print(e)
+22 Dec 2022 17:09:02 >>> a = 20
+22 Dec 2022 17:09:04 >>> del a
+22 Dec 2022 17:09:11 >>> print(a)
+22 Dec 2022 17:10:47 >>> 자산 = 200000
+22 Dec 2022 17:10:52 >>> 부채 = 100000
+22 Dec 2022 17:10:59 >>> 자본 = 100000
+22 Dec 2022 17:11:05 >>> 자산 == 부채 + 자본
+22 Dec 2022 17:11:28 >>> 자산 = 250000
+22 Dec 2022 17:11:31 >>> 부채 = 100000
+22 Dec 2022 17:11:44 >>> 자본 = 100000
+22 Dec 2022 17:11:48 >>> 자산 == 부채 + 자본
+22 Dec 2022 17:16:48 >>> 자산 = '300,000'
+22 Dec 2022 17:16:51 >>> 300,000
+22 Dec 2022 17:17:07 >>> print(100,000)
+22 Dec 2022 17:20:16 >>> 1_000_000
+22 Dec 2022 17:20:25 >>> print(1_000_000)
+07 Jan 2023 15:05:46 >>> 분개장 = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/분개장.tbl")
+07 Jan 2023 15:05:48 >>> 분개장.view()
+09 Jan 2023 18:21:51 >>> 분개장 = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/분개장.tbl")
+09 Jan 2023 18:21:52 >>> 분개장.view()
+09 Jan 2023 18:23:03 >>> test = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/test.tbl")
+09 Jan 2023 18:23:04 >>> test.view()
+09 Jan 2023 18:23:05 >>> del test
+09 Jan 2023 18:23:21 >>> load_py("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/test.py")
+09 Jan 2023 18:41:29 >>> run
+09 Jan 2023 18:41:35 >>> python
+09 Jan 2023 18:51:44 >>> test = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/test.tbl")
+09 Jan 2023 18:51:45 >>> test.view()
+09 Jan 2023 18:51:49 >>> del 분개장
+09 Jan 2023 18:56:18 >>> test.set_readonly(True)
+09 Jan 2023 18:56:18 >>> test.set_readonly(False)
+09 Jan 2023 18:56:19 >>> test.set_readonly(True)
+09 Jan 2023 18:56:22 >>> test.set_readonly(False)
+09 Jan 2023 19:13:28 >>> test.set_type(5, str, "")
+09 Jan 2023 19:13:28 >>> test.set_format(5, None)
+09 Jan 2023 19:13:28 >>> test.set_type(5, str)
+09 Jan 2023 19:13:28 >>> test.replace_column_values(5, "\"2019-01-05\"")
+09 Jan 2023 19:14:35 >>> test.set_type(5, DateTime, "%Y-%m-%d")
+09 Jan 2023 19:14:35 >>> test.set_format(5, "%Y-%m-%d")
+09 Jan 2023 19:22:29 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+09 Jan 2023 19:22:30 >>> Bid.view()
+09 Jan 2023 19:22:59 >>> Simple.sort(Bid, True, "입찰자번호")
+09 Jan 2023 19:23:08 >>> Simple.sort(Bid, True, "입찰번호")
+09 Jan 2023 19:23:09 >>> Simple.sort(Bid, False, "입찰번호")
+09 Jan 2023 19:23:10 >>> Simple.sort(Bid, True, "입찰번호")
+09 Jan 2023 19:32:30 >>> Bid.filter('프로젝트번호 >= "9003"')
+09 Jan 2023 19:32:35 >>> Bid.filter('프로젝트번호 >= "9003"')
+09 Jan 2023 19:32:38 >>> Bid.filter('프로젝트번호 == "9003"')
+09 Jan 2023 19:32:49 >>> del Bid
+09 Jan 2023 19:32:53 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+09 Jan 2023 19:32:53 >>> Bid.view()
+09 Jan 2023 19:33:32 >>> res = Bid[0:11]
+09 Jan 2023 19:33:33 >>> res.view()
+09 Jan 2023 19:34:10 >>> res = res[[0,5]]
+09 Jan 2023 19:34:10 >>> res.view()
+09 Jan 2023 19:35:38 >>> res_selected = Simple.select(res, 'record.입찰번호 == "9000"')
+09 Jan 2023 19:35:39 >>> res_selected.view()
+09 Jan 2023 19:35:44 >>> del res_selected
+09 Jan 2023 19:39:34 >>> Bid_selected = Simple.select(Bid, "'' in 입찰번호")
+09 Jan 2023 19:39:35 >>> Bid_selected.view()
+09 Jan 2023 19:40:07 >>> del Bid_selected
+09 Jan 2023 19:40:08 >>> del Bid
+09 Jan 2023 19:40:10 >>> del test
+09 Jan 2023 19:40:15 >>> test = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/test.tbl")
+09 Jan 2023 19:40:16 >>> test.view()
+09 Jan 2023 19:40:16 >>> test1 = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/test1.tbl")
+09 Jan 2023 19:40:17 >>> test1.view()
+09 Jan 2023 19:42:02 >>> res1 = Simple.col_join(test1, test, ["A","A"])
+09 Jan 2023 19:42:03 >>> res1.view()
+09 Jan 2023 19:43:51 >>> res2 = Simple.join(test, test, 'Simple.fuzzymatch(record1.D, record2.D) >= 0.4')
+09 Jan 2023 19:43:52 >>> res2.view()
+09 Jan 2023 19:44:10 >>> del res2
+09 Jan 2023 19:44:12 >>> del test1
+09 Jan 2023 19:44:12 >>> del test
+09 Jan 2023 19:44:35 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+09 Jan 2023 19:44:36 >>> Bid.view()
+09 Jan 2023 19:45:01 >>> result = Grouping.stratify_by_value(Bid, 0, "프로젝트번호")
+09 Jan 2023 19:45:02 >>> result.view()
+09 Jan 2023 19:45:39 >>> result2 = Grouping.stratify_by_value(Bid, 0, "프로젝트번호", "입찰일자")
+09 Jan 2023 19:45:39 >>> result2.view()
+09 Jan 2023 19:45:46 >>> del result2
+09 Jan 2023 19:45:48 >>> del result
+09 Jan 2023 19:48:56 >>> del Bid
+09 Jan 2023 19:49:07 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+09 Jan 2023 19:49:07 >>> Bid.view()
+09 Jan 2023 19:49:36 >>> res2 = Grouping.stratify_by_date(Bid, "입찰일자", 2, "M")
+09 Jan 2023 19:49:37 >>> res2.view()
+09 Jan 2023 19:50:14 >>> result = Grouping.stratify(Bid, 5)
+09 Jan 2023 19:50:15 >>> result.view()
+09 Jan 2023 19:50:43 >>> del res2
+09 Jan 2023 19:50:46 >>> del result
+09 Jan 2023 19:52:34 >>> res2 = Grouping.summarize_by_value(Bid, "프로젝트번호", 입찰금액합계="입찰금액합계=\"sum(group[\"입찰금액\"])\"")
+09 Jan 2023 19:52:35 >>> res2.view()
+09 Jan 2023 19:53:14 >>> del res2
+09 Jan 2023 19:54:05 >>> res2 = Grouping.summarize_by_value(Bid, "입찰번호", "프로젝트번호", 금액합계="금액합계=\"sum(group[\"금액\"])\"")
+09 Jan 2023 19:54:06 >>> res2.view()
+09 Jan 2023 19:54:55 >>> del res2
+09 Jan 2023 19:55:38 >>> result = Crosstable.pivot(Bid, ["입찰자번호"], ["프로젝트번호"], ["sum(group['입찰번호'])", "sum(group['입찰금액'])"])
+09 Jan 2023 19:55:43 >>> result = Crosstable.pivot(Bid, ["입찰자번호"], ["프로젝트번호"], ["sum(group['입찰금액'])"])
+09 Jan 2023 19:55:47 >>> result.view()
+14 Jan 2023 08:38:41 >>> purchases = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/purchases.tbl")
+14 Jan 2023 08:38:42 >>> purchases.view()
+14 Jan 2023 08:39:28 >>> Trend = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Trend.tbl")
+14 Jan 2023 08:39:29 >>> Trend.view()
+14 Jan 2023 08:39:32 >>> Handshake = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Handshake.tbl")
+14 Jan 2023 08:39:32 >>> Handshake.view()
+14 Jan 2023 08:39:35 >>> PurchaseTransaction = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/PurchaseTransaction.tbl")
+14 Jan 2023 08:39:35 >>> PurchaseTransaction.view()
+14 Jan 2023 08:40:35 >>> Cusum = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Cusum.tbl")
+14 Jan 2023 08:40:36 >>> Cusum.view()
+14 Jan 2023 08:40:37 >>> Blacklist = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Blacklist.tbl")
+14 Jan 2023 08:40:37 >>> Blacklist.view()
+14 Jan 2023 08:40:39 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+14 Jan 2023 08:40:40 >>> Bid.view()
+14 Jan 2023 08:40:51 >>> Bid.set_readonly(True)
+14 Jan 2023 08:41:26 >>> del purchases
+14 Jan 2023 08:41:29 >>> del Cusum
+14 Jan 2023 08:41:32 >>> del PurchaseTransaction
+14 Jan 2023 08:41:33 >>> del Handshake
+14 Jan 2023 08:41:34 >>> del Trend
+14 Jan 2023 08:42:46 >>> 최소금액 = Grouping.summarize_by_value(Bid, "프로젝트번호", 입찰금액_최소="min(group['입찰금액'])")
+14 Jan 2023 08:42:46 >>> 최소금액.view()
+14 Jan 2023 08:44:16 >>> 최소금액 = Grouping.summarize_by_value(Bid, "입찰금액", 최소_입찰금액="min(group['입찰금액'])")
+14 Jan 2023 08:44:17 >>> 최소금액.view()
+14 Jan 2023 08:44:44 >>> res1 = Simple.col_match_diff(최소금액, 최소금액, ["입찰금액","최소_입찰금액"])
+14 Jan 2023 08:44:44 >>> res1.view()
+14 Jan 2023 08:47:03 >>> 최소금액 = Grouping.summarize_by_value(Bid, "프로젝트번호", 최소_입찰금액="min(group['입찰번호'])")
+14 Jan 2023 08:47:04 >>> 최소금액.view()
+14 Jan 2023 08:47:39 >>> 최소금액 = Grouping.summarize_by_value(Bid, "프로젝트번호", 최소_입찰금액="sum(group['입찰금액'])")
+14 Jan 2023 08:47:40 >>> 최소금액.view()
+14 Jan 2023 08:48:15 >>> 최소금액 = Grouping.summarize_by_value(Bid, "프로젝트번호", "입찰금액", 최소_입찰금액="sum(group['입찰번호'])")
+14 Jan 2023 08:48:15 >>> 최소금액.view()
+14 Jan 2023 08:49:05 >>> 최소금액 = Grouping.summarize_by_value(Bid, "프로젝트번호", 입찰금액_최소="min(group['입찰금액'])")
+14 Jan 2023 08:49:05 >>> 최소금액.view()
+14 Jan 2023 08:49:35 >>> res1 = Simple.col_match_diff(Bid, 최소금액, ["입찰금액","입찰금액_최소"])
+14 Jan 2023 08:49:35 >>> res1.view()
+14 Jan 2023 08:50:42 >>> res1 = Simple.col_match_diff(Bid, 최소금액, ["입찰금액","입찰금액_최소"])
+14 Jan 2023 08:50:42 >>> res1.view()
+14 Jan 2023 08:51:46 >>> del res1
+14 Jan 2023 08:51:48 >>> del 최소금액
+14 Jan 2023 08:52:22 >>> res2 = Grouping.stratify_by_value(Bid, 0, "프로젝트번호")
+14 Jan 2023 08:52:23 >>> res2.view()
+14 Jan 2023 08:53:13 >>> res2.insert_column(5, "Z_score", number, Simple.calc_zscore(res2, "입찰금액"))
+14 Jan 2023 08:53:40 >>> res3 = res2.combine()
+14 Jan 2023 08:53:41 >>> res3.view()
+14 Jan 2023 08:53:51 >>> Simple.sort(res3, False, "Z_score")
+14 Jan 2023 09:05:58 >>> Bid.insert_column(3, "입찰일자_2", number)
+14 Jan 2023 09:06:57 >>> del res2
+14 Jan 2023 09:06:59 >>> del res3
+14 Jan 2023 09:08:18 >>> del Bid
+14 Jan 2023 09:08:22 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+14 Jan 2023 09:08:23 >>> Bid.view()
+14 Jan 2023 09:09:32 >>> Bid.set_name(2, "입찰금액_2")
+14 Jan 2023 09:09:32 >>> Bid.set_type(2, number, "#.00")
+14 Jan 2023 09:09:32 >>> Bid.set_format(2, "#.00")
+14 Jan 2023 09:09:32 >>> Bid.set_type(2, number)
+14 Jan 2023 09:09:33 >>> Bid.replace_column_values(2, "< DateToNum(입찰일자) >")
+14 Jan 2023 09:09:48 >>> del Bid
+14 Jan 2023 09:09:49 >>> Bid = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/Bid.tbl")
+14 Jan 2023 09:09:50 >>> Bid.view()
+14 Jan 2023 09:10:44 >>> Bid.insert_calculated_static(4, "입찰금액_1", number, "DateToNum(입찰금액)")
+14 Jan 2023 09:10:48 >>> Bid.insert_calculated_static(4, "입찰금액_1", number, "DateToNum(입찰금액)")
+14 Jan 2023 09:11:26 >>> Bid.insert_calculated_static(4, "입찰금액_1", number, "DateToNum(입찰금액)")
+14 Jan 2023 09:11:48 >>> Bid.insert_calculated_static(4, "입찰일자_1", number, "DateToNum(입찰일자)")
+14 Jan 2023 09:11:48 >>> Bid.set_format(4, "#.00")
+14 Jan 2023 09:12:49 >>> del Bid
+14 Jan 2023 10:24:05 >>> 분개장 = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/분개장.tbl")
+14 Jan 2023 10:24:05 >>> 분개장.view()
+14 Jan 2023 10:24:37 >>> res1 = Simple.col_match_diff(분개장, 분개장, ["차변금액","대변금액"])
+14 Jan 2023 10:25:24 >>> res1 = Simple.col_match_diff(분개장, 분개장, ["차변금액","대변금액"])
+14 Jan 2023 10:26:10 >>> 분개장_selected = Simple.select(분개장, 'record.차변금액 == 대변금액')
+14 Jan 2023 10:26:10 >>> 분개장_selected.view()
+14 Jan 2023 10:28:51 >>> Simple.sort(분개장, True, "전표일자")
+14 Jan 2023 10:28:58 >>> Simple.sort(분개장, False, "전표일자")
+14 Jan 2023 10:30:08 >>> del 분개장_selected
+14 Jan 2023 10:30:11 >>> del 분개장
+14 Jan 2023 10:30:15 >>> 분개장 = load("C:/Users/kwonk/Downloads/개인 프로젝트/juno1412-1/FDA2급/samples/분개장.tbl")
+14 Jan 2023 10:30:15 >>> 분개장.view()
+14 Jan 2023 10:33:03 >>> res1 = Grouping.stratify_by_value(분개장, 0, "전표일자", "차변금액", "대변금액", "승인일자")
+14 Jan 2023 10:33:03 >>> res1.view()
+14 Jan 2023 10:35:00 >>> res2 = Simple.col_match_diff(분개장, 분개장, ["차변금액","대변금액"])
+14 Jan 2023 10:35:28 >>> res3 = Grouping.stratify_by_value(res1, 0, "전표일자")
+14 Jan 2023 10:35:28 >>> res3.view()
+14 Jan 2023 10:36:22 >>> Simple.sort(분개장, True, "계정과목")
+14 Jan 2023 10:37:36 >>> 분개장['계정과목'].value_counts()
+14 Jan 2023 10:37:46 >>> 분개장['계정과목'].values_count()
+14 Jan 2023 10:37:53 >>> 분개장['계정과목'])
+14 Jan 2023 10:37:56 >>> 분개장['계정과목']
+14 Jan 2023 10:38:11 >>> 분개장['계정과목'].nunique()
+14 Jan 2023 10:42:28 >>> res4 = Grouping.stratify_by_value(분개장, 0, "계정코드")
+14 Jan 2023 10:42:28 >>> res4.view()
+14 Jan 2023 10:44:02 >>> Simple.sort(분개장, True, "전표번호")
+14 Jan 2023 10:47:34 >>> 재고수불부_전기 = load("C:/Users/kwonk/Downloads/재고수불부_전기.tbl")
+14 Jan 2023 10:47:35 >>> 재고수불부_전기.view()
+14 Jan 2023 10:47:41 >>> 재고수불부_당기 = load("C:/Users/kwonk/Downloads/재고수불부_당기.tbl")
+14 Jan 2023 10:47:42 >>> 재고수불부_당기.view()
+14 Jan 2023 10:48:58 >>> res5 = Simple.col_join(재고수불부_전기, 재고수불부_당기, ["플랜트","플랜트"], ["자재코드","자재코드"])
+14 Jan 2023 10:49:00 >>> res5.view()
+14 Jan 2023 10:51:17 >>> res8 = Simple.col_match_diff(재고수불부_전기, 재고수불부_당기, ["기말수량","기초수량"])
+14 Jan 2023 10:52:18 >>> res8 = Simple.col_match_same(재고수불부_전기, 재고수불부_당기, ["기초수량","기말수량"])
+14 Jan 2023 10:52:19 >>> res8.view()
+14 Jan 2023 10:55:55 >>> res9 = Simple.col_match_diff(재고수불부_전기, 재고수불부_당기, ["기초수량","기말수량"])
+14 Jan 2023 10:55:56 >>> res9.view()
+14 Jan 2023 10:56:32 >>> 분개장_D1 = load("C:/Users/kwonk/Downloads/분개장_D1.tbl")
+14 Jan 2023 10:56:32 >>> 분개장_D1.view()
+14 Jan 2023 10:56:55 >>> Simple.sort(분개장_D1, True, "전표일자")
+14 Jan 2023 11:03:42 >>> 분개장_D1_1 = load("C:/Users/kwonk/Downloads/분개장_D1.tbl")
+14 Jan 2023 11:03:42 >>> 분개장_D1_1.view()
+14 Jan 2023 11:04:04 >>> 분개장_E1 = load("C:/Users/kwonk/Downloads/분개장_E1.tbl")
+14 Jan 2023 11:04:04 >>> 분개장_E1.view()
+14 Jan 2023 11:04:50 >>> res0 = Simple.select(분개장_E1, "Simple.wildcard_match('2022/01/03', 전표일자, False, True)")
+14 Jan 2023 11:04:51 >>> res0.view()
+14 Jan 2023 11:04:56 >>> del 분개장_E1
+14 Jan 2023 11:04:57 >>> del 분개장_D1_1
+14 Jan 2023 11:04:59 >>> del 분개장_D1
+14 Jan 2023 11:05:00 >>> del res9
+14 Jan 2023 11:05:02 >>> del res5
+14 Jan 2023 11:05:04 >>> del res8
+14 Jan 2023 11:05:04 >>> del 재고수불부_당기
+14 Jan 2023 11:05:05 >>> del 재고수불부_전기
+14 Jan 2023 11:05:06 >>> del 분개장
+14 Jan 2023 11:05:14 >>> 분개장_E1 = load("C:/Users/kwonk/Downloads/분개장_E1.tbl")
+14 Jan 2023 11:05:14 >>> 분개장_E1.view()
+14 Jan 2023 11:05:22 >>> Simple.sort(분개장_E1, True, "전표일자")
+14 Jan 2023 11:06:14 >>> 분개장_E1.insert_calculated_static(0, "Unnamed", DateTime, "2022/01/03 +7")
+14 Jan 2023 11:06:43 >>> res2 = Grouping.stratify_by_value(분개장_E1, 0, "전표일자")
+14 Jan 2023 11:06:44 >>> res2.view()
+14 Jan 2023 11:07:13 >>> res2 = Grouping.stratify_by_value(분개장_E1, 0, "전표일자", "계정코드")
+14 Jan 2023 11:07:13 >>> res2.view()
+14 Jan 2023 11:08:23 >>> res1 = Grouping.stratify_by_date(분개장_E1, "전표일자", 7, "D")
+14 Jan 2023 11:08:35 >>> res1 = Grouping.stratify_by_date(분개장_E1, "전표일자", 7, "D")
+14 Jan 2023 11:08:47 >>> res1 = Grouping.stratify_by_date(분개장_E1, "전표일자", 1, "M")
+14 Jan 2023 11:09:00 >>> res1 = Grouping.stratify_by_date(분개장_E1, "차변금액", 7, "D")
+14 Jan 2023 11:09:45 >>> res5 = Grouping.summarize_by_value(분개장_E1, "전표일자", unique="count(set(group['전표일자']))")
+14 Jan 2023 11:09:46 >>> res5.view()
+14 Jan 2023 11:10:55 >>> Simple.sort(분개장_E1, True, "계정과목")
+14 Jan 2023 11:11:30 >>> rea10 = Grouping.summarize_by_value(분개장_E1, "계정과목", 계정="max(group['전표일자'])")
+14 Jan 2023 11:11:30 >>> rea10.view()
+14 Jan 2023 11:12:22 >>> res9 = Grouping.summarize_by_value(분개장_E1, "계정과목", 카운트="count(group['전표일자'])")
+14 Jan 2023 11:12:22 >>> res9.view()
+14 Jan 2023 11:12:29 >>> Simple.sort(res9, False, "카운트")
