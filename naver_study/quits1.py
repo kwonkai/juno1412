@@ -1,4 +1,4 @@
-﻿# 주어진 리스트
+﻿# 1번 퀴즈
 num_list = [1, 5, 7, 15, 16, 22, 28, 29]
 
 def get_odd_num(num_list):

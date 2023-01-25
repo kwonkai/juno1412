@@ -7,6 +7,7 @@ def reverse_sentence(sentence):
     result = ""
     # 단어 단위로 나눠주기
     st = list(sentence.split(' '))
+    st.reverse()
 
     # 반복문으로 단어를 문장으로 합쳐주기
     for i in st:
